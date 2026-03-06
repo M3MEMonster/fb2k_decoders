@@ -11,6 +11,7 @@ Duration&Subsong Manager can let users manage the songlength and subsongs in pla
 All 3rdParty parts follow their own licenses.
 
 If you want to build, struct folders like this:
+
 |
 
 |-project1
