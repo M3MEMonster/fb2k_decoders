@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4B04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;inl</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4C08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PCH.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="main.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="input_ixalance.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="preferences.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\webixs\asmEmu.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\webixs\File0.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\webixs\FileMap.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\webixs\FileMapSFXI.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\webixs\FileSFXI.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\webixs\Mixer2.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\webixs\Mixer3.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\webixs\MixerBase.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\webixs\Module.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\webixs\Packer.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\webixs\PlayerCore.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\webixs\PlayerIXS.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\webixs\WaveGen.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\webixs\WaveLibrary.c"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\webixs\winaudio.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\miniz\miniz.c"><Filter>Source Files</Filter></ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="ixalance_config.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="resource.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="3rdParty\webixs\asmEmu.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="3rdParty\webixs\basetypes.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="3rdParty\webixs\File0.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="3rdParty\webixs\FileMap.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="3rdParty\webixs\FileMapSFXI.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="3rdParty\webixs\FileSFXI.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="3rdParty\webixs\mem.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="3rdParty\webixs\Mixer2.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="3rdParty\webixs\Mixer3.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="3rdParty\webixs\MixerBase.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="3rdParty\webixs\Module.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="3rdParty\webixs\Packer.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="3rdParty\webixs\PlayerCore.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="3rdParty\webixs\PlayerIXS.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="3rdParty\webixs\WaveGen.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="3rdParty\webixs\winaudio.h"><Filter>Header Files</Filter></ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="foo_ixalance.rc"><Filter>Resource Files</Filter></ResourceCompile>
+  </ItemGroup>
+</Project>

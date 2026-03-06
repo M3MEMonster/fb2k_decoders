@@ -1,0 +1,13 @@
+#pragma once
+
+#define IDD_UADE_DECODERS        202
+
+#define IDC_PLAY_INDEFINITELY    1001
+#define IDC_INDEFINITE_NOTE      1005
+
+#define IDC_DECODER_LIST         1010
+#define IDC_DECODER_NOTE         1011
+#define IDC_BTN_ENABLE_ALL       1012
+#define IDC_BTN_DISABLE_ALL      1013
+#define IDC_SAMPLERATE_LABEL     1014
+#define IDC_SAMPLERATE_COMBO     1015

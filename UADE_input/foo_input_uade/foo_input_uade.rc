@@ -1,0 +1,25 @@
+#include <windows.h>
+#include <commctrl.h>
+#include "resource.h"
+
+IDD_UADE_DECODERS DIALOGEX 0, 0, 340, 240
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
+    AUTOCHECKBOX    "Play indefinitely",
+                    IDC_PLAY_INDEFINITELY, 7, 7, 320, 10
+    LTEXT           "(Ignore song end signal)",
+                    IDC_INDEFINITE_NOTE, 20, 19, 310, 8
+
+    LTEXT           "Sample rate:", IDC_SAMPLERATE_LABEL, 7, 36, 45, 8
+    COMBOBOX        IDC_SAMPLERATE_COMBO, 55, 34, 70, 200,
+                    CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+
+    LTEXT           "Enable or disable individual UADE player/decoder modules:",
+                    IDC_DECODER_NOTE, 7, 54, 320, 8
+    CONTROL         "", IDC_DECODER_LIST, "SysListView32",
+                    WS_BORDER | WS_TABSTOP | WS_VSCROLL | LVS_REPORT | LVS_SHOWSELALWAYS | LVS_SINGLESEL,
+                    7, 66, 326, 154
+    PUSHBUTTON      "Enable All",  IDC_BTN_ENABLE_ALL,  7, 224, 55, 14
+    PUSHBUTTON      "Disable All", IDC_BTN_DISABLE_ALL, 67, 224, 55, 14
+END

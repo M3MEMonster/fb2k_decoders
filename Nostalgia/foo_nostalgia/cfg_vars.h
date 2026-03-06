@@ -1,0 +1,24 @@
+#pragma once
+#include <SDK/cfg_var.h>
+
+namespace nostalgia_cfg {
+
+static constexpr GUID guid_enable_goattracker  = { 0x1a2b3c4d, 0x5e6f, 0x4a01, { 0xb2, 0xc3, 0xd4, 0xe5, 0xf6, 0x07, 0x18, 0x29 } };
+static constexpr GUID guid_enable_protrekkr    = { 0x2b3c4d5e, 0x6f70, 0x4b12, { 0xc3, 0xd4, 0xe5, 0xf6, 0x07, 0x18, 0x29, 0x3a } };
+static constexpr GUID guid_enable_megatracker  = { 0x3c4d5e6f, 0x7081, 0x4c23, { 0xd4, 0xe5, 0xf6, 0x07, 0x18, 0x29, 0x3a, 0x4b } };
+static constexpr GUID guid_enable_skaletracker = { 0x4d5e6f70, 0x8192, 0x4d34, { 0xe5, 0xf6, 0x07, 0x18, 0x29, 0x3a, 0x4b, 0x5c } };
+static constexpr GUID guid_enable_klystrack    = { 0x5a6b7c8d, 0x1e2f, 0x4e67, { 0x91, 0xa2, 0xb3, 0xc4, 0xd5, 0xe6, 0xf7, 0x08 } };
+static constexpr GUID guid_enable_monotone    = { 0x6b7c8d9e, 0x2f30, 0x4f78, { 0xa2, 0xb3, 0xc4, 0xd5, 0xe6, 0xf7, 0x08, 0x19 } };
+static constexpr GUID guid_enable_facsoundtracker = { 0x7c8d9eaf, 0x3041, 0x4089, { 0xb3, 0xc4, 0xd5, 0xe6, 0xf7, 0x08, 0x19, 0x2a } };
+static constexpr GUID guid_default_duration    = { 0x5e6f7a81, 0x9b0c, 0x4d45, { 0xf6, 0x07, 0x18, 0x29, 0x3a, 0x4b, 0x5c, 0x6d } };
+
+inline cfg_bool cfg_goattracker_enabled(guid_enable_goattracker, true);
+inline cfg_bool cfg_protrekkr_enabled(guid_enable_protrekkr, true);
+inline cfg_bool cfg_megatracker_enabled(guid_enable_megatracker, true);
+inline cfg_bool cfg_skaletracker_enabled(guid_enable_skaletracker, true);
+inline cfg_bool cfg_klystrack_enabled(guid_enable_klystrack, true);
+inline cfg_bool cfg_monotone_enabled(guid_enable_monotone, true);
+inline cfg_bool cfg_facsoundtracker_enabled(guid_enable_facsoundtracker, true);
+inline cfg_int  cfg_default_duration_sec(guid_default_duration, 180);
+
+} // namespace nostalgia_cfg

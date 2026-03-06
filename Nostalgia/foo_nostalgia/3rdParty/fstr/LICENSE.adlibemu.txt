@@ -1,0 +1,7 @@
+adlibemu.c / adlibemu.h
+Copyright (C) 1998-2001 Ken Silverman
+
+Source copied from adplug
+
+License: GNU Lesser General Public License, version 2.1 or later.
+See file headers in adlibemu.c and adlibemu.h for full notice text.

@@ -1,0 +1,275 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}</ProjectGuid>
+    <RootNamespace>foo_nostalgia</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros">
+    <SdkDir>..\..\SDK-2025-03-07\</SdkDir>
+    <GoatTrackerDir>3rdParty\GoatTracker\</GoatTrackerDir>
+    <ProTrekkrDir>3rdParty\ProTrekkr\</ProTrekkrDir>
+    <MegaTrackerDir>3rdParty\MegaTracker\</MegaTrackerDir>
+    <SkaleTrackerDir>3rdParty\SkaleTracker\</SkaleTrackerDir>
+    <KlystrackLibDir>3rdParty\libksnd-windows-x86\</KlystrackLibDir>
+    <KlystrackDllDir>3rdParty\libksnd-windows-x86\x86\release\</KlystrackDllDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <TargetExt>.dll</TargetExt>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <TargetExt>.dll</TargetExt>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_USE_MATH_DEFINES;NOMINMAX;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_USRDLL;__STAND_ALONE__;__WINAMP__;__REPLAYER__;MTP_WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(GoatTrackerDir);$(GoatTrackerDir)src;$(GoatTrackerDir)src\asm;$(GoatTrackerDir)src\bme;$(ProTrekkrDir)protrekkr;$(MegaTrackerDir);$(SkaleTrackerDir);$(SkaleTrackerDir)SkalePlayer\Include;$(KlystrackLibDir)include;$(ProjectDir)zlib;$(SdkDir)foobar2000\SDK;$(SdkDir)foobar2000\helpers;$(SdkDir)foobar2000;$(SdkDir)libPPUI;$(SdkDir)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/wd4201 /wd4706 /wd4244 /wd4267 /wd4305 /Zc:char8_t- /utf-8 /FS %(AdditionalOptions)</AdditionalOptions>
+      <ObjectFileName>$(IntDir)%(RelativeDir)\</ObjectFileName>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SdkDir)foobar2000\shared\shared-$(Platform).lib;$(SkaleTrackerDir)SkalePlayer\Lib\Win32\SkalePlayer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+      <PostBuildEvent>
+      <Command>pwsh.exe -NoLogo -NonInteractive -NoProfile -File "$(ProjectDir)Build-FB2KComponent.ps1" "$(TargetName)" "$(TargetFileName)" "$(Platform)" "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_USE_MATH_DEFINES;NOMINMAX;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_USRDLL;__STAND_ALONE__;__WINAMP__;__REPLAYER__;MTP_WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(GoatTrackerDir);$(GoatTrackerDir)src;$(GoatTrackerDir)src\asm;$(GoatTrackerDir)src\bme;$(ProTrekkrDir)protrekkr;$(MegaTrackerDir);$(SkaleTrackerDir);$(SkaleTrackerDir)SkalePlayer\Include;$(KlystrackLibDir)include;$(ProjectDir)zlib;$(SdkDir)foobar2000\SDK;$(SdkDir)foobar2000\helpers;$(SdkDir)foobar2000;$(SdkDir)libPPUI;$(SdkDir)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/wd4201 /wd4706 /wd4244 /wd4267 /wd4305 /Zc:char8_t- /utf-8 /FS %(AdditionalOptions)</AdditionalOptions>
+      <ObjectFileName>$(IntDir)%(RelativeDir)\</ObjectFileName>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <StringPooling>true</StringPooling>
+      <OmitFramePointers>true</OmitFramePointers>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SdkDir)foobar2000\shared\shared-$(Platform).lib;$(SkaleTrackerDir)SkalePlayer\Lib\Win32\SkalePlayer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+      <PostBuildEvent>
+      <Command>pwsh.exe -NoLogo -NonInteractive -NoProfile -File "$(ProjectDir)Build-FB2KComponent.ps1" "$(TargetName)" "$(TargetFileName)" "$(Platform)" "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  
+  <ItemGroup>
+    <ClCompile Include="component_version.cpp" />
+    <ClCompile Include="preferences.cpp" />
+    <ClCompile Include="input_goattracker.cpp" />
+    <ClCompile Include="input_protrekkr.cpp" />
+    <ClCompile Include="input_megatracker.cpp" />
+    <ClCompile Include="input_skaletracker.cpp" />
+    <ClCompile Include="input_klystrack.cpp" />
+    <ClCompile Include="input_monotone.cpp" />
+    <ClCompile Include="input_facsoundtracker.cpp" />
+    <ClCompile Include="3rdParty\fstr\adlibemu.c" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ResourceCompile Include="foo_nostalgia.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="3rdParty\soloud\LICENSE.soloud.txt" />
+    <None Include="3rdParty\soloud\soloud_monotone.cpp" />
+    <None Include="3rdParty\soloud\soloud_monotone.h" />
+    <None Include="3rdParty\fstr\adlibemu.h" />
+    <None Include="3rdParty\fstr\LICENSE.adlibemu.txt" />
+    <None Include="3rdParty\fstr\LICENSE.fstr.txt" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ClCompile Include="$(GoatTrackerDir)src\asm\asmtab.c" />
+    <ClCompile Include="$(GoatTrackerDir)src\asm\chnkpool.c" />
+    <ClCompile Include="$(GoatTrackerDir)src\asm\expr.c" />
+    <ClCompile Include="$(GoatTrackerDir)src\asm\lexyy.c" />
+    <ClCompile Include="$(GoatTrackerDir)src\asm\log.c" />
+    <ClCompile Include="$(GoatTrackerDir)src\asm\membuf.c" />
+    <ClCompile Include="$(GoatTrackerDir)src\asm\membufio.c" />
+    <ClCompile Include="$(GoatTrackerDir)src\asm\namedbuf.c" />
+    <ClCompile Include="$(GoatTrackerDir)src\asm\parse.c" />
+    <ClCompile Include="$(GoatTrackerDir)src\asm\pc.c" />
+    <ClCompile Include="$(GoatTrackerDir)src\asm\vec.c" />
+    <ClCompile Include="$(GoatTrackerDir)src\ginstr.c" />
+    <ClCompile Include="$(GoatTrackerDir)src\gorder.c" />
+    <ClCompile Include="$(GoatTrackerDir)src\gpattern.c" />
+    <ClCompile Include="$(GoatTrackerDir)src\gplay.c" />
+    <ClCompile Include="$(GoatTrackerDir)src\greloc.c" />
+    <ClCompile Include="$(GoatTrackerDir)src\gsid.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\gsong.c" />
+    <ClCompile Include="$(GoatTrackerDir)src\gtable.c" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid-fp\envelopefp.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid-fp\extfiltfp.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid-fp\filterfp.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid-fp\potfp.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid-fp\sidfp.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid-fp\versionfp.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid-fp\voicefp.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid-fp\wavefp.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid\envelope.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid\extfilt.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid\filter.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid\pot.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid\sid.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid\voice.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid\wave.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid\wave6581_PST.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid\wave6581_PS_.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid\wave6581_P_T.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid\wave6581__ST.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid\wave8580_PST.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid\wave8580_PS_.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid\wave8580_P_T.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid\wave8580__ST.cpp" />
+    <ClCompile Include="$(GoatTrackerDir)src\resid\version.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ClCompile Include="$(ProTrekkrDir)protrekkr\editors\patterns_blocks.cpp" />
+    <ClCompile Include="$(ProTrekkrDir)protrekkr\files\303s.cpp" />
+    <ClCompile Include="$(ProTrekkrDir)protrekkr\files\files.cpp" />
+    <ClCompile Include="$(ProTrekkrDir)protrekkr\files\reverbs.cpp" />
+    <ClCompile Include="$(ProTrekkrDir)protrekkr\files\synths.cpp" />
+    <ClCompile Include="$(ProTrekkrDir)protrekkr\replay\replay.cpp" />
+    <ClCompile Include="$(ProTrekkrDir)protrekkr\replay\samples_unpack.cpp" />
+    <ClCompile Include="$(ProTrekkrDir)protrekkr\replay\spline.cpp" />
+    <ClCompile Include="$(ProTrekkrDir)protrekkr\replay\synth.cpp" />
+    <ClCompile Include="$(ProTrekkrDir)protrekkr\replay\tb_303.cpp" />
+    <ClCompile Include="$(ProTrekkrDir)protrekkr\replay\wavpack.cpp" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ClCompile Include="$(MegaTrackerDir)mtpng\ntgs.c" />
+    <ClCompile Include="$(MegaTrackerDir)mtpng\oss.c" />
+    <ClCompile Include="$(MegaTrackerDir)mtpng\smus.c" />
+    <ClCompile Include="$(MegaTrackerDir)mtpng\ssmt.c" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ClCompile Include="zlib\adler32.c" />
+    <ClCompile Include="zlib\crc32.c" />
+    <ClCompile Include="zlib\inffast.c" />
+    <ClCompile Include="zlib\inflate.c" />
+    <ClCompile Include="zlib\inftrees.c" />
+    <ClCompile Include="zlib\zutil.c" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="$(SdkDir)pfc\pfc.vcxproj">
+      <Project>{EBFFFB4E-261D-44D3-B89C-957B31A0BF9C}</Project>
+      <AdditionalProperties Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Configuration=Debug FB2K;Platform=Win32</AdditionalProperties>
+      <AdditionalProperties Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Configuration=Release FB2K;Platform=Win32</AdditionalProperties>
+    </ProjectReference>
+    <ProjectReference Include="$(SdkDir)foobar2000\SDK\foobar2000_SDK.vcxproj">
+      <Project>{E8091321-D79D-4575-86EF-064EA1A4A20D}</Project>
+    </ProjectReference>
+    <ProjectReference Include="$(SdkDir)foobar2000\foobar2000_component_client\foobar2000_component_client.vcxproj">
+      <Project>{71AD2674-065B-48F5-B8B0-E1F9D3892081}</Project>
+    </ProjectReference>
+    <ProjectReference Include="$(SdkDir)foobar2000\helpers\foobar2000_sdk_helpers.vcxproj">
+      <Project>{EE47764E-A202-4F85-A767-ABDAB4AFF35F}</Project>
+    </ProjectReference>
+    <ProjectReference Include="$(SdkDir)libPPUI\libPPUI.vcxproj">
+      <Project>{7729EB82-4069-4414-964B-AD399091A03F}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <Target Name="CreateObjDirs" BeforeTargets="ClCompile">
+    <ItemGroup>
+      <_ObjDirs Include="@(ClCompile-&gt;'$(IntDir)%(RelativeDir)')" />
+    </ItemGroup>
+    <MakeDir Directories="@(_ObjDirs)" />
+  </Target>
+  <Target Name="PackComponent" AfterTargets="Link" Condition="'$(Configuration)'=='Release'">
+    <PropertyGroup>
+      <ComponentZip>$(OutDir)$(TargetName).fb2k-component</ComponentZip>
+      <StagingDir>$(IntDir)fb2k-component-staging\</StagingDir>
+    </PropertyGroup>
+    <RemoveDir Directories="$(StagingDir)" />
+    <MakeDir Directories="$(StagingDir)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(StagingDir)" />
+    <Copy SourceFiles="$(SkaleTrackerDir)SkalePlayer\Bin\Win32\SkalePlayer.dll" DestinationFolder="$(StagingDir)" />
+    <Copy SourceFiles="$(KlystrackDllDir)ksnd.dll" DestinationFolder="$(StagingDir)" Condition="Exists('$(KlystrackDllDir)ksnd.dll')" />
+    <Copy SourceFiles="$(KlystrackDllDir)libksnd.dll" DestinationFolder="$(StagingDir)" Condition="Exists('$(KlystrackDllDir)libksnd.dll')" />
+    <Delete Files="$(ComponentZip)" Condition="Exists('$(ComponentZip)')" />
+    <ZipDirectory SourceDirectory="$(StagingDir)" DestinationFile="$(ComponentZip)" Overwrite="true" />
+    <Message Text="Packed $(ComponentZip)" Importance="high" />
+  </Target>
+</Project>

@@ -1,0 +1,11 @@
+#include <windows.h>
+#include "resource.h"
+
+IDD_IXALANCE_PREFS DIALOGEX 0, 0, 260, 74
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "Segoe UI", 400, 0
+BEGIN
+    LTEXT       "Fallback duration (M:SS) when track length is unknown:", -1, 4, 6, 232, 10
+    EDITTEXT    IDC_DEFAULT_DURATION, 4, 20, 54, 12, ES_AUTOHSCROLL
+    CONTROL     "Play indefinitely (ignore fallback duration)", IDC_PLAY_INDEFINITELY, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 4, 40, 220, 10
+END

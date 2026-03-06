@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files"><UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier><Extensions>cpp;c;cc;cxx;c++;cppm;ixx</Extensions></Filter>
+    <Filter Include="Header Files"><UniqueIdentifier>{93995380-89BD-4B04-88EB-625FBE52EBFB}</UniqueIdentifier><Extensions>h;hpp;hxx;inl</Extensions></Filter>
+    <Filter Include="Resource Files"><UniqueIdentifier>{67DA6AB6-F800-4C08-8B7A-83BB121AAD01}</UniqueIdentifier><Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin</Extensions></Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PCH.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="main.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="input_tfmx.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="preferences.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\tfmxaudiodecoder.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Decoder.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\DecoderProxy.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\CRCLight.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Dump.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Filter.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\PaulaVoice.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\LamePaulaVoice.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\LamePaulaMixer.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Chris\TFMXDecoder.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Chris\Macro.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Chris\Modulation.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Chris\Pattern.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Chris\Sequencer.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Chris\Songs.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Chris\ByChecksum.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Chris\SamplesFile.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Chris\MergedFiles.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Jochen\HippelDecoder.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Jochen\Analyze.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Jochen\COSO.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Jochen\Envelope.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Jochen\FC.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Jochen\Instrument.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Jochen\MCMD.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Jochen\ModPack.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Jochen\Portamento.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Jochen\Probe.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Jochen\SMOD.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Jochen\TFMX7V.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Jochen\TFMX.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Jochen\TraitsByChecksum.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="3rdParty\libtfmxaudiodecoder-main\src\Jochen\Vibrato.cpp"><Filter>Source Files</Filter></ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="tfmx_config.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="resource.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="3rdParty\libtfmxaudiodecoder-main\src\Config.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="3rdParty\libtfmxaudiodecoder-main\src\tfmxaudiodecoder.h"><Filter>Header Files</Filter></ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="foo_tfmx.rc"><Filter>Resource Files</Filter></ResourceCompile>
+  </ItemGroup>
+</Project>

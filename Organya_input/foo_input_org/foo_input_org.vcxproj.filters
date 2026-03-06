@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4B04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx</Extensions>
+    </Filter>
+    <Filter Include="Decoder">
+      <UniqueIdentifier>{A1B2C3D4-E5F6-4789-0ABC-DEF012345678}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stubs">
+      <UniqueIdentifier>{D4C3B2A1-6F5E-9874-CBA0-876543210FED}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="input_org.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParty\Organya\OrganyaDecoder.cpp">
+      <Filter>Decoder</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdParty\Organya\OrganyaDecoder.h">
+      <Filter>Decoder</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdParty\Organya\wavetable.h">
+      <Filter>Decoder</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdParty\Organya\drums.h">
+      <Filter>Decoder</Filter>
+    </ClInclude>
+    <ClInclude Include="stubs\Core.h">
+      <Filter>Stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="stubs\IO\Stream.h">
+      <Filter>Stubs</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

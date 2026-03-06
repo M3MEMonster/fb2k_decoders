@@ -1,0 +1,302 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build" ToolsVersion="15.0">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{B4E92F1A-5C3D-4A8B-9E7F-1D2C3B4A5E6F}</ProjectGuid>
+    <RootNamespace>foo_input_uade</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
+    <IntDir>$(Configuration)_$(Platform)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
+    <IntDir>$(Configuration)_$(Platform)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
+    <IntDir>$(Configuration)_$(Platform)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
+    <IntDir>$(Configuration)_$(Platform)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <PreprocessorDefinitions>_WINDOWS;_USRDLL;_USE_MATH_DEFINES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;_CRT_DECLARE_NONSTDC_NAMES;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\SDK-2025-03-07\\foobar2000;$(ProjectDir)..\..\SDK-2025-03-07;$(ProjectDir)3rdParty\UADE\uade\src;$(ProjectDir)3rdParty\UADE\uade\src\include;$(ProjectDir)3rdParty\UADE\uade\src\frontends\common;$(ProjectDir)3rdParty\UADE\uade\src\frontends\include;$(ProjectDir)3rdParty\UADE\bencode\include</AdditionalIncludeDirectories>
+      <AdditionalOptions>/wd4201 /wd4706 /wd4244 /wd4018 /wd4267 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <ObjectFileName>$(IntDir)%(RelativeDir)\</ObjectFileName>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <TreatSpecificWarningsAsErrors>4715</TreatSpecificWarningsAsErrors>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>..\..\SDK-2025-03-07\\foobar2000\shared\shared-$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+      <PostBuildEvent>
+      <Command>pwsh.exe -NoLogo -NonInteractive -NoProfile -File "$(ProjectDir)Build-FB2KComponent.ps1" "$(TargetName)" "$(TargetFileName)" "$(Platform)" "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <PreprocessorDefinitions>_WINDOWS;_USRDLL;_USE_MATH_DEFINES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;_CRT_DECLARE_NONSTDC_NAMES;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\SDK-2025-03-07\\foobar2000;$(ProjectDir)..\..\SDK-2025-03-07;$(ProjectDir)3rdParty\UADE\uade\src;$(ProjectDir)3rdParty\UADE\uade\src\include;$(ProjectDir)3rdParty\UADE\uade\src\frontends\common;$(ProjectDir)3rdParty\UADE\uade\src\frontends\include;$(ProjectDir)3rdParty\UADE\bencode\include</AdditionalIncludeDirectories>
+      <AdditionalOptions>/wd4201 /wd4706 /wd4244 /wd4018 /wd4267 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <ObjectFileName>$(IntDir)%(RelativeDir)\</ObjectFileName>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <TreatSpecificWarningsAsErrors>4715</TreatSpecificWarningsAsErrors>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>..\..\SDK-2025-03-07\\foobar2000\shared\shared-$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+      <PostBuildEvent>
+      <Command>pwsh.exe -NoLogo -NonInteractive -NoProfile -File "$(ProjectDir)Build-FB2KComponent.ps1" "$(TargetName)" "$(TargetFileName)" "$(Platform)" "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <PreprocessorDefinitions>_WINDOWS;_USRDLL;_USE_MATH_DEFINES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;_CRT_DECLARE_NONSTDC_NAMES;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\SDK-2025-03-07\\foobar2000;$(ProjectDir)..\..\SDK-2025-03-07;$(ProjectDir)3rdParty\UADE\uade\src;$(ProjectDir)3rdParty\UADE\uade\src\include;$(ProjectDir)3rdParty\UADE\uade\src\frontends\common;$(ProjectDir)3rdParty\UADE\uade\src\frontends\include;$(ProjectDir)3rdParty\UADE\bencode\include</AdditionalIncludeDirectories>
+      <AdditionalOptions>/wd4201 /wd4706 /wd4244 /wd4018 /wd4267 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <ObjectFileName>$(IntDir)%(RelativeDir)\</ObjectFileName>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <StringPooling>true</StringPooling>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <TreatSpecificWarningsAsErrors>4715</TreatSpecificWarningsAsErrors>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <AdditionalDependencies>..\..\SDK-2025-03-07\\foobar2000\shared\shared-$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+      <PostBuildEvent>
+      <Command>pwsh.exe -NoLogo -NonInteractive -NoProfile -File "$(ProjectDir)Build-FB2KComponent.ps1" "$(TargetName)" "$(TargetFileName)" "$(Platform)" "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <PreprocessorDefinitions>_WINDOWS;_USRDLL;_USE_MATH_DEFINES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;_CRT_DECLARE_NONSTDC_NAMES;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\SDK-2025-03-07\\foobar2000;$(ProjectDir)..\..\SDK-2025-03-07;$(ProjectDir)3rdParty\UADE\uade\src;$(ProjectDir)3rdParty\UADE\uade\src\include;$(ProjectDir)3rdParty\UADE\uade\src\frontends\common;$(ProjectDir)3rdParty\UADE\uade\src\frontends\include;$(ProjectDir)3rdParty\UADE\bencode\include</AdditionalIncludeDirectories>
+      <AdditionalOptions>/wd4201 /wd4706 /wd4244 /wd4018 /wd4267 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <ObjectFileName>$(IntDir)%(RelativeDir)\</ObjectFileName>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <StringPooling>true</StringPooling>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <TreatSpecificWarningsAsErrors>4715</TreatSpecificWarningsAsErrors>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <AdditionalDependencies>..\..\SDK-2025-03-07\\foobar2000\shared\shared-$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+      <PostBuildEvent>
+      <Command>pwsh.exe -NoLogo -NonInteractive -NoProfile -File "$(ProjectDir)Build-FB2KComponent.ps1" "$(TargetName)" "$(TargetFileName)" "$(Platform)" "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  
+  <ItemGroup>
+    <ClCompile Include="PCH.cpp" />
+    <ClCompile Include="foo_input_uade.cpp" />
+    <ClCompile Include="uade_wrapper.cpp" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ClCompile Include="3rdParty\UADE\bencode\bencode.c" />
+    <ClCompile Include="3rdParty\UADE\compat\memmemrep.c" />
+    <ClCompile Include="3rdParty\UADE\compat\strlrep.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\audio.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\cfgfile.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\cia.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\compiler.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\cpudefs.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\cpuemu.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\cpustbl.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\custom.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\debug.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\fpp.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\frontends\common\amifilemagic.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\frontends\common\eagleplayer.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\frontends\common\effects.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\frontends\common\fifo.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\frontends\common\md5.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\frontends\common\rmc.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\frontends\common\songdb.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\frontends\common\songinfo.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\frontends\common\support.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\frontends\common\uadeconf.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\frontends\common\uadecontrol.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\frontends\common\uadeipc.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\frontends\common\uadestate.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\frontends\common\uadeutils.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\frontends\common\vparray.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\md-support.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\memory.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\missing.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\newcpu.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\readcpu.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\sd-sound.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\sinctable.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\text_scope.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\uade.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\uademain.c" />
+    <ClCompile Include="3rdParty\UADE\uade\src\write_audio.c" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ResourceCompile Include="foo_input_uade.rc" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\SDK-2025-03-07\\pfc\pfc.vcxproj">
+      <Project>{ebfffb4e-261d-44d3-b89c-957b31a0bf9c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SDK-2025-03-07\\foobar2000\SDK\foobar2000_SDK.vcxproj">
+      <Project>{e8091321-d79d-4575-86ef-064ea1a4a20d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SDK-2025-03-07\\foobar2000\helpers\foobar2000_sdk_helpers.vcxproj">
+      <Project>{ee47764e-a202-4f85-a767-abdab4aff35f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SDK-2025-03-07\\foobar2000\foobar2000_component_client\foobar2000_component_client.vcxproj">
+      <Project>{71ad2674-065b-48f5-b8b0-e1f9d3892081}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  
+  <Target Name="PackageComponent" AfterTargets="Link">
+    <PropertyGroup>
+      <_PkgStage>$(IntDir)fb2k_package\</_PkgStage>
+      <_PkgOutput>$(OutDir)$(TargetName).fb2k-component</_PkgOutput>
+    </PropertyGroup>
+    <RemoveDir Directories="$(_PkgStage)" />
+    <MakeDir Directories="$(_PkgStage)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(_PkgStage)" />
+    <Exec Command="xcopy /E /I /Q /Y &quot;$(ProjectDir)3rdParty\UADE\data&quot; &quot;$(_PkgStage)uade&quot;" />
+    <Delete Files="$(_PkgOutput)" Condition="Exists('$(_PkgOutput)')" />
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;$zip='$(OutDir)$(TargetName).zip'; Remove-Item $zip -Force -EA SilentlyContinue; Compress-Archive -Path '$(_PkgStage)*' -DestinationPath $zip -Force; Move-Item $zip '$(_PkgOutput)' -Force&quot;" />
+    <Message Importance="high" Text="Packaged: $(_PkgOutput)" />
+  </Target>
+</Project>

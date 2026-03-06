@@ -1,0 +1,15 @@
+#include <windows.h>
+#include "resource.h"
+
+IDD_TFMX_PREFS DIALOGEX 0, 0, 330, 254
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "Segoe UI", 400, 0
+BEGIN
+    LTEXT       "Enable or disable individual TFMX/FC formats:", -1, 4, 4, 320, 10
+    CONTROL     "", IDC_FORMAT_LIST, "SysListView32",
+                LVS_REPORT | LVS_SINGLESEL | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,
+                4, 18, 322, 180
+    LTEXT       "Fallback duration (M:SS):", -1, 4, 206, 130, 10
+    EDITTEXT    IDC_DEFAULT_DURATION, 136, 204, 52, 12, ES_AUTOHSCROLL
+    CONTROL     "Play indefinitely (keep duration display, ignore stop limit)", IDC_PLAY_INDEFINITELY, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 4, 222, 300, 10
+END
