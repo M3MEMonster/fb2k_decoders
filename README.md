@@ -12,8 +12,13 @@ All 3rdParty parts follow their own licenses.
 
 If you want to build, struct folders like this:
 |
+
 |-project1
+
 |-project2
+
 .
+
 .
+
 |-SDK-2025-03-07
