@@ -17,7 +17,6 @@
 
 namespace {
 
-static constexpr uint32_t kSampleRate = 44100;
 static constexpr int kNumChannels = 2;
 
 static std::mutex g_psycleMutex;
@@ -34,11 +33,13 @@ struct FoobarRiffFile : public psycle::host::RiffFile
 
     bool Expect(const void* pData, std::size_t numBytes) override {
         try { return m_file->read(const_cast<void*>(pData), numBytes, *m_abort) == numBytes; }
+        catch (const exception_aborted&) { throw; }
         catch (...) { return false; }
     }
 
     int Seek(std::size_t offset) override {
         try { m_file->seek(offset, *m_abort); return 1; }
+        catch (const exception_aborted&) { throw; }
         catch (...) { return 0; }
     }
 
@@ -47,21 +48,25 @@ struct FoobarRiffFile : public psycle::host::RiffFile
             auto pos = m_file->get_position(*m_abort);
             m_file->seek(pos + numBytes, *m_abort);
             return 1;
-        } catch (...) { return 0; }
+        } catch (const exception_aborted&) { throw; }
+        catch (...) { return 0; }
     }
 
     bool Eof() override {
         try { return m_file->get_position(*m_abort) >= m_file->get_size(*m_abort); }
+        catch (const exception_aborted&) { throw; }
         catch (...) { return true; }
     }
 
     std::size_t FileSize() override {
         try { return static_cast<std::size_t>(m_file->get_size(*m_abort)); }
+        catch (const exception_aborted&) { throw; }
         catch (...) { return 0; }
     }
 
     std::size_t GetPos() override {
         try { return static_cast<std::size_t>(m_file->get_position(*m_abort)); }
+        catch (const exception_aborted&) { throw; }
         catch (...) { return 0; }
     }
 
@@ -69,6 +74,7 @@ struct FoobarRiffFile : public psycle::host::RiffFile
 
     bool ReadInternal(void* pData, std::size_t numBytes) override {
         try { return m_file->read(pData, numBytes, *m_abort) == numBytes; }
+        catch (const exception_aborted&) { throw; }
         catch (...) { return false; }
     }
 
@@ -94,6 +100,7 @@ public:
         if (p_reason == input_open_info_write)
             throw exception_tagging_unsupported();
 
+        m_sampleRate = 96000;
         m_file = p_filehint;
         input_open_file_helper(m_file, p_path, p_reason, p_abort);
 
@@ -103,6 +110,23 @@ public:
         bool isPsycle2 = !m_isPsycle3 && (memcmp(header, "PSY2SONG", 8) == 0);
         if (!m_isPsycle3 && !isPsycle2)
             throw exception_io_unsupported_format();
+
+        // Keep metadata scan lightweight and non-intrusive.
+        // Full engine ownership is only needed for actual decoding.
+        if (p_reason != input_open_decode) {
+            m_loaded = false;
+            m_decoding = false;
+            m_subsongIndex = 0;
+            m_numSubsongs = 1;
+            m_songTracks = 0;
+            m_songName.clear();
+            m_songAuthor.clear();
+            m_songComments.clear();
+            m_durations.assign(1, 0.0);
+            m_clipboardMem.clear();
+            m_clipboardMemSize = 0;
+            return;
+        }
 
         std::lock_guard<std::mutex> lock(g_psycleMutex);
 
@@ -124,7 +148,7 @@ public:
             g_engineInitialized = true;
         }
 
-        psycle::plugins::druttis::UpdateWaveforms(kSampleRate);
+        psycle::plugins::druttis::UpdateWaveforms(m_sampleRate);
 
         psycle::host::CProgressDialog dlg(nullptr, false);
         FoobarRiffFile riffFile;
@@ -132,18 +156,30 @@ public:
         riffFile.m_abort = &p_abort;
         m_file->seek(0, p_abort);
 
-        if (!psycle::host::Global::song().Load(&riffFile, dlg))
+        bool loadOk = false;
+        try {
+            loadOk = psycle::host::Global::song().Load(&riffFile, dlg);
+        } catch (...) {
+            m_loaded = false;
+            m_decoding = false;
+            psycle::host::Global::player().StopRecording();
+            psycle::host::Global::player().Stop();
+            psycle::host::Global::song().Reset();
+            psycle::host::Global::configuration().RefreshSettings();
+            throw;
+        }
+        if (!loadOk) {
+            m_loaded = false;
+            m_decoding = false;
+            psycle::host::Global::player().StopRecording();
+            psycle::host::Global::player().Stop();
+            psycle::host::Global::song().Reset();
+            psycle::host::Global::configuration().RefreshSettings();
             throw exception_io_data("Failed to load PSY file");
+        }
 
         g_activeOwner = this;
         m_loaded = true;
-
-        psycle::host::Global::player()._recording = true;
-        m_clipboardMem.clear();
-        m_clipboardMem.push_back(reinterpret_cast<char*>(&m_clipboardMemSize));
-        m_clipboardMem.push_back(nullptr);
-        psycle::host::Global::player().StartRecording(
-            "", 32, kSampleRate, psycle::host::no_mode, true, false, 0, 0, &m_clipboardMem);
 
         m_numSubsongs = psycle::host::Global::player().NumSubsongs(
             psycle::host::Global::song());
@@ -154,14 +190,18 @@ public:
         m_songComments = song.comments;
         m_songTracks = song.SONGTRACKS;
 
-        m_durations.resize(m_numSubsongs);
-        for (int i = 0; i < m_numSubsongs; i++) {
-            int seq = -1, pos = -1, time = -1, linecount = -1;
-            int startPos = psycle::host::Global::player().NumSubsongs(
-                psycle::host::Global::song(), i);
-            psycle::host::Global::player().CalcPosition(
-                psycle::host::Global::song(), seq, pos, time, linecount, false, startPos);
-            m_durations[i] = (time > 0) ? time / 1000.0 : 0.0;
+        m_durations.assign(m_numSubsongs, 0.0);
+        // Playback switches are latency-sensitive; full duration pre-scan can be very expensive.
+        if (p_reason != input_open_decode) {
+            for (int i = 0; i < m_numSubsongs; i++) {
+                p_abort.check();
+                int seq = -1, pos = -1, time = -1, linecount = -1;
+                int startPos = psycle::host::Global::player().NumSubsongs(
+                    psycle::host::Global::song(), i);
+                psycle::host::Global::player().CalcPosition(
+                    psycle::host::Global::song(), seq, pos, time, linecount, false, startPos);
+                m_durations[i] = (time > 0) ? time / 1000.0 : 0.0;
+            }
         }
     }
 
@@ -177,7 +217,7 @@ public:
         if (p_subsong < m_durations.size() && m_durations[p_subsong] > 0)
             p_info.set_length(m_durations[p_subsong]);
 
-        p_info.info_set_int("samplerate", kSampleRate);
+        p_info.info_set_int("samplerate", m_sampleRate);
         p_info.info_set_int("channels", kNumChannels);
         p_info.info_set_int("bitspersample", 32);
         p_info.info_set("encoding", "synthesized");
@@ -205,11 +245,17 @@ public:
 
     void decode_initialize(t_uint32 p_subsong, unsigned p_flags, abort_callback& p_abort) {
         std::lock_guard<std::mutex> lock(g_psycleMutex);
-        if (g_activeOwner != this) {
+        if (!m_loaded || g_activeOwner != this) {
             m_decoding = false;
             return;
         }
+        m_clipboardMem.clear();
+        m_clipboardMem.push_back(reinterpret_cast<char*>(&m_clipboardMemSize));
+        m_clipboardMem.push_back(nullptr);
+        psycle::host::Global::player().StartRecording(
+            "", 32, m_sampleRate, psycle::host::no_mode, true, false, 0, 0, &m_clipboardMem);
         m_subsongIndex = p_subsong;
+        m_dynamic_info_sent = false;
         int startPos = psycle::host::Global::player().NumSubsongs(
             psycle::host::Global::song(), m_subsongIndex);
         psycle::host::Global::player().Start(startPos, 0);
@@ -217,10 +263,14 @@ public:
     }
 
     bool decode_run(audio_chunk& p_chunk, abort_callback& p_abort) {
-        if (!m_decoding) return false;
-
+        p_abort.check();
         std::lock_guard<std::mutex> lock(g_psycleMutex);
+        if (!m_decoding) return false;
         if (g_activeOwner != this) {
+            m_decoding = false;
+            return false;
+        }
+        if (m_clipboardMem.size() < 2) {
             m_decoding = false;
             return false;
         }
@@ -239,7 +289,7 @@ public:
             return false;
         }
 
-        p_chunk.set_data_32(outputBuffer, samplesProduced, kNumChannels, kSampleRate);
+        p_chunk.set_data_32(outputBuffer, samplesProduced, kNumChannels, m_sampleRate);
         return true;
     }
 
@@ -258,7 +308,7 @@ public:
     }
 
     bool decode_can_seek() { return true; }
-    bool decode_get_dynamic_info(file_info&, double&) { return false; }
+
     bool decode_get_dynamic_info_track(file_info&, double&) { return false; }
     void decode_on_idle(abort_callback&) {}
 
@@ -271,6 +321,10 @@ public:
         return stricmp_utf8(p_extension, "psy") == 0;
     }
     static const char* g_get_name() { return "Psycle decoder"; }
+    static GUID g_get_preferences_guid() {
+        return { 0x9b3c4d5e, 0xf607, 0x489a,
+                 { 0xbc, 0x12, 0x3d, 0x4e, 0x5f, 0x60, 0x71, 0x89 } };
+    }
     static const GUID g_get_guid() {
         static const GUID guid = {
             0x7a3b5c1d, 0xe2f4, 0x4a6b,
@@ -280,18 +334,21 @@ public:
     }
 
     void shutdown_engine_locked() {
+        psycle::host::Global::player().StopRecording();
         psycle::host::Global::player().Stop();
         psycle::host::Global::song().Reset();
-        psycle::host::Global::player().~Player();
-        new (&psycle::host::Global::player()) psycle::host::Player;
         m_loaded = false;
         m_decoding = false;
+        m_clipboardMemSize = 0;
+        if (m_clipboardMem.size() > 1) m_clipboardMem[1] = nullptr;
     }
 
 private:
     service_ptr_t<file> m_file;
+    uint32_t m_sampleRate = 96000;
     bool m_loaded = false;
     bool m_decoding = false;
+    bool m_dynamic_info_sent = false;
     bool m_isPsycle3 = false;
     uint32_t m_subsongIndex = 0;
     int m_numSubsongs = 1;

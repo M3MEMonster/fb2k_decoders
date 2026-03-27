@@ -197,6 +197,10 @@
     </ClCompile>
     <ClCompile Include="foo_input_adlib.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="preferences.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="foo_input_adlib.rc" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3rdParty\AdLib\adplug\*.cpp">
@@ -211,6 +215,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="adlib_config.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="3rdParty\AdLib\adplugdb.h" />
   </ItemGroup>
   <ItemGroup>

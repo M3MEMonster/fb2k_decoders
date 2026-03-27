@@ -118,7 +118,11 @@ static bool dsm_is_proxy_already_installed(autoplaylist_client::ptr client) {
     return g_dsm_proxy_set.count(client.get_ptr()) > 0;
 }
 
-static void dsm_install_and_refresh_autoplaylists() {
+// @param force_refresh  When true (e.g. after Apply), remove+add even for
+//                       already-proxied playlists to force content rebuild.
+//                       When false (startup), skip playlists that already
+//                       have the proxy installed to avoid the remove/add gap.
+static void dsm_install_and_refresh_autoplaylists(bool force_refresh = false) {
     autoplaylist_manager::ptr apm;
     try {
         apm = autoplaylist_manager::get();
@@ -143,8 +147,14 @@ static void dsm_install_and_refresh_autoplaylists() {
 
         try {
             autoplaylist_client::ptr client = apm->query_client(p);
+            bool already_proxied = dsm_is_proxy_already_installed(client);
+
+            // On startup, skip playlists that already have our proxy — avoids
+            // the brief unfiltered window between remove_client / add_client.
+            if (already_proxied && !force_refresh) continue;
+
             autoplaylist_client::ptr wrapped = client;
-            if (!dsm_is_proxy_already_installed(client)) {
+            if (!already_proxied) {
                 wrapped = new service_impl_t<subsong_autoplaylist_client_proxy>(client);
             }
 
@@ -297,6 +307,12 @@ public:
         apply_range_to_checkboxes();
         sync_range_from_checkboxes();
 
+        // Remember current file selection so we can restore it after refresh.
+        size_t prev_sel = m_file_list.GetSingleSel();
+        pfc::string8 prev_path;
+        if (prev_sel != SIZE_MAX && prev_sel < m_files.size())
+            prev_path = m_files[prev_sel].path;
+
         auto& db = subsong_database::get();
 
         std::vector<std::string> affected_paths;
@@ -324,7 +340,20 @@ public:
         m_has_pending_changes = false;
 
         scan_playlist();
-        if (m_file_list.GetSingleSel() != SIZE_MAX) {
+
+        // Restore selection to the previously selected file if still present.
+        size_t restore_sel = SIZE_MAX;
+        if (!prev_path.is_empty()) {
+            for (size_t i = 0; i < m_files.size(); ++i) {
+                if (pfc::stricmp_ascii(m_files[i].path.c_str(), prev_path.c_str()) == 0) {
+                    restore_sel = i;
+                    break;
+                }
+            }
+        }
+
+        if (restore_sel != SIZE_MAX) {
+            m_file_list.SelectSingle(restore_sel);
             load_subsongs_for_selection();
         } else {
             m_subsong_host.m_subsongs.clear();
@@ -420,6 +449,17 @@ private:
         update_pending_from_checkboxes();
     }
 
+    static uint32_t query_real_subsong_count(const char* path) {
+        try {
+            input_info_reader::ptr reader;
+            abort_callback_dummy abort;
+            input_entry::g_open_for_info_read(reader, nullptr, path, abort, true);
+            return reader->get_subsong_count();
+        } catch (...) {
+            return 0;
+        }
+    }
+
     void scan_playlist() {
         m_files.clear();
         m_file_list.SetItemCount(0);
@@ -453,17 +493,25 @@ private:
                 continue;
 
             seen_paths.insert(key);
-            add_file_entry(path, observed_count);
+
+            // Query the decoder for the true subsong count rather than using
+            // the playlist's observed count (which reflects exclusion filters).
+            uint32_t real_count = query_real_subsong_count(path.c_str());
+            if (real_count == 0) real_count = observed_count;
+            add_file_entry(path, real_count);
         }
     }
 
     void add_file_entry(const std::string& path, uint32_t total) {
         file_entry fe;
         fe.path = path.c_str();
+        // Extract just the filename — foobar paths may contain both / and \ separators.
         const char* p = path.c_str();
-        const char* last = strrchr(p, '/');
-        if (!last) last = strrchr(p, '\\');
-        fe.display_name = last ? (last + 1) : p;
+        const char* last_sep = nullptr;
+        for (const char* c = p; *c; ++c) {
+            if (*c == '/' || *c == '\\') last_sep = c;
+        }
+        fe.display_name = last_sep ? (last_sep + 1) : p;
         fe.total_subsongs = total;
         m_files.push_back(std::move(fe));
 
@@ -499,13 +547,6 @@ private:
             input_entry::g_open_for_info_read(reader, nullptr, file.path.c_str(), abort, true);
 
             uint32_t count = reader->get_subsong_count();
-
-            if (count != file.total_subsongs) {
-                file.total_subsongs = count;
-                pfc::string8 count_str;
-                count_str << count;
-                m_file_list.SetItemText(sel, 1, count_str.c_str());
-            }
 
             for (uint32_t i = 0; i < count; i++) {
                 uint32_t id = reader->get_subsong(i);
@@ -677,7 +718,7 @@ private:
     }
 
     void refresh_all_autoplaylists() {
-        dsm_install_and_refresh_autoplaylists();
+        dsm_install_and_refresh_autoplaylists(/*force_refresh=*/true);
     }
 
     bool HasChanged() {
@@ -712,7 +753,11 @@ public:
 };
 
 static preferences_page_factory_t<prefs_page_subsong> g_prefs_subsong_factory;
-FB2K_ON_INIT_STAGE(dsm_reinstall_autoplaylist_proxy_on_startup, init_stages::after_ui_init);
+// Two init stages: after_library_init installs proxies early (before autoplaylist
+// content is populated from the library); after_ui_init catches any playlists
+// that weren't available yet.  The skip-if-already-proxied guard in
+// dsm_install_and_refresh_autoplaylists() prevents the redundant remove/add gap.
 FB2K_ON_INIT_STAGE(dsm_reinstall_autoplaylist_proxy_on_startup, init_stages::after_library_init);
+FB2K_ON_INIT_STAGE(dsm_reinstall_autoplaylist_proxy_on_startup, init_stages::after_ui_init);
 
 } // namespace

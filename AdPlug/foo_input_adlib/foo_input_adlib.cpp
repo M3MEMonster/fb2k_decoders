@@ -11,13 +11,13 @@
 #include "adplug/version.h"
 #include "adplug/libbinio/binstr.h"
 #include "adplugdb.h"
+#include "adlib_config.h"
 
 #include <vector>
 #include <string>
 #include <memory>
 #include <map>
 
-static constexpr unsigned kSampleRate = 48000;
 static constexpr unsigned kChannels = 2;
 static constexpr unsigned kBitsPerSample = 16;
 
@@ -184,11 +184,57 @@ struct OplCore
     }
 };
 
+// Creates a base OPL emulator for the given core index.
+// coreIdx: 0=Harekiet's (CWemuopl), 1=Ken Silverman's (CKemuopl),
+//          2=Jarek Burczynski's (CEmuopl), 3=Nuked OPL3 (CNemuopl)
+static Copl* MakeBaseOpl(int coreIdx, unsigned sampleRate, bool stereo)
+{
+    switch (coreIdx)
+    {
+        case 1:  return new CKemuopl(sampleRate, true, stereo);
+        case 2:  return new CEmuopl (sampleRate, true, stereo);
+        case 3:  return new CNemuopl(sampleRate);
+        default: return new CWemuopl(sampleRate, true, stereo);
+    }
+}
+
 static OplCore* CreateOplCore(bool stereo)
 {
-    auto core = new OplCore;
-    core->stereo = stereo;
-    core->opl = new CWemuopl(kSampleRate, true, stereo);
+    auto core       = new OplCore;
+    core->stereo    = stereo;
+
+    const unsigned sampleRate  = GetAdLibSampleRate();
+    const int      coreIdx     = (int)cfg_adlib_core;
+    const int      eqIdx       = (int)cfg_adlib_equalizer;
+    const bool     useSurround = (bool)cfg_adlib_surround;
+
+    if (useSurround)
+    {
+        // Wrap two OPL instances in CSurroundopl for the stereo harmonic effect.
+        // CSurroundopl copies the COPLprops structs and takes ownership of the opl
+        // pointers inside them, so stack allocation of the wrappers is fine.
+        COPLprops a, b;
+        a.opl      = MakeBaseOpl(coreIdx, sampleRate, true);
+        a.use16bit = true;
+        a.stereo   = true;
+        b.opl      = MakeBaseOpl(coreIdx, sampleRate, true);
+        b.use16bit = true;
+        b.stereo   = true;
+
+        auto* surround = new CSurroundopl(&a, &b, true);
+
+        // Equalizer: ESS FM keeps the default FREQ_OFFSET=128 harmonic;
+        // None sets offset to 0 (stereo doubling without frequency transposition).
+        if (eqIdx != 0)
+            surround->set_offset(0.0);
+
+        core->opl = surround;
+    }
+    else
+    {
+        core->opl = MakeBaseOpl(coreIdx, sampleRate, stereo);
+    }
+
     return core;
 }
 
@@ -199,6 +245,8 @@ public:
     {
         if (p_reason == input_open_info_write)
             throw exception_tagging_unsupported();
+
+        m_sampleRate = GetAdLibSampleRate();
 
         m_file = p_filehint;
         input_open_file_helper(m_file, p_path, p_reason, p_abort);
@@ -252,7 +300,7 @@ public:
         if (durationMs > 0)
             p_info.set_length(static_cast<double>(durationMs) / 1000.0);
 
-        p_info.info_set_int("samplerate", kSampleRate);
+        p_info.info_set_int("samplerate", m_sampleRate);
         p_info.info_set_int("channels", kChannels);
         p_info.info_set_int("bitspersample", kBitsPerSample);
         p_info.info_set("encoding", "synthesized");
@@ -295,7 +343,7 @@ public:
 
         unsigned long durationMs = m_player->songlength(p_subsong);
         m_durationSamples = (durationMs > 0)
-            ? static_cast<uint64_t>(durationMs) * kSampleRate / 1000
+            ? static_cast<uint64_t>(durationMs) * m_sampleRate / 1000
             : 0;
 
         const std::string path = m_path;
@@ -356,9 +404,9 @@ public:
             {
                 float refresh = m_player->getrefresh();
                 if (refresh > 0)
-                    m_remainingSamples = static_cast<unsigned>(kSampleRate / refresh);
+                    m_remainingSamples = static_cast<unsigned>(m_sampleRate / refresh);
                 else
-                    m_remainingSamples = kSampleRate / 70;
+                    m_remainingSamples = m_sampleRate / 70;
                 m_isStuck = 0;
             }
             else if (m_isStuck == 0)
@@ -380,7 +428,7 @@ public:
         p_chunk.set_data_fixedpoint(
             buffer,
             produced * kChannels * (kBitsPerSample / 8),
-            kSampleRate,
+            m_sampleRate,
             kChannels,
             kBitsPerSample,
             audio_chunk::g_guess_channel_config(kChannels)
@@ -397,7 +445,7 @@ public:
         m_hasEnded = false;
 
         unsigned targetMs = static_cast<unsigned>(p_seconds * 1000.0);
-        m_samplesPlayed = static_cast<uint64_t>(targetMs) * kSampleRate / 1000;
+        m_samplesPlayed = static_cast<uint64_t>(targetMs) * m_sampleRate / 1000;
 
         unsigned posMs = 0;
 
@@ -413,7 +461,7 @@ public:
 
         float refresh = m_player->getrefresh();
         if (refresh > 0)
-            m_remainingSamples = static_cast<unsigned>(kSampleRate / refresh);
+            m_remainingSamples = static_cast<unsigned>(m_sampleRate / refresh);
     }
 
     bool decode_can_seek() { return true; }
@@ -457,6 +505,7 @@ private:
     CPlayer* m_player = nullptr;
     OplCore* m_core = nullptr;
 
+    unsigned m_sampleRate = 49716;
     unsigned m_remainingSamples = 0;
     bool m_hasEnded = false;
     unsigned m_isStuck = 0;

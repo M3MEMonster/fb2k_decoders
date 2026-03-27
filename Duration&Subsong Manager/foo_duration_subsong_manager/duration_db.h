@@ -32,6 +32,7 @@ public:
     static pfc::string8 make_location_key(const char* path, uint32_t subsong);
 
     bool has_entries() const;
+    bool has_path(const char* path) const;
     size_t size() const;
 
 private:

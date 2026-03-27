@@ -1,0 +1,591 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{B1C2D3E4-F506-7890-ABCD-1234567890AB}</ProjectGuid>
+    <RootNamespace>foo_furnace</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros">
+    <SdkDir>..\..\SDK-2025-03-07\</SdkDir>
+    <FurnaceDir>..\3rdParty\Furnace\</FurnaceDir>
+    <WtlDir>..\..\WTL10_10320\Include\</WtlDir>
+  </PropertyGroup>
+  <!-- Output directories -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <TargetExt>.dll</TargetExt>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <TargetExt>.dll</TargetExt>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <TargetExt>.dll</TargetExt>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <TargetExt>.dll</TargetExt>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <!-- Debug|Win32 -->
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_USE_MATH_DEFINES;NOMINMAX;_CRT_SECURE_NO_WARNINGS;_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR;_WINDOWS;_USRDLL;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(FurnaceDir);$(FurnaceDir)furnace\src;$(FurnaceDir)furnace\src\engine;$(FurnaceDir)furnace\extern;$(FurnaceDir)furnace\extern\blip_buf;$(FurnaceDir)furnace\extern\fmt\include;$(FurnaceDir)furnace\extern\IconFontCppHeaders;$(FurnaceDir)furnace\extern\vgsound_emu-modified;$(FurnaceDir)furnace\src\icon;$(ProjectDir)zlib;$(SdkDir)foobar2000\SDK;$(SdkDir)foobar2000\helpers;$(SdkDir)foobar2000;$(SdkDir)libPPUI;$(SdkDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/wd4201 /wd4706 /wd4244 /wd4267 /wd4305 /Zc:char8_t- /utf-8 /FS %(AdditionalOptions)</AdditionalOptions>
+      <ObjectFileName>$(IntDir)%(RelativeDir)\</ObjectFileName>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SdkDir)foobar2000\shared\shared-$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent>
+      <Command>pwsh.exe -NoLogo -NonInteractive -NoProfile -File "$(ProjectDir)Build-FB2KComponent.ps1" "$(TargetName)" "$(TargetFileName)" "$(Platform)" "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <!-- Debug|x64 -->
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_USE_MATH_DEFINES;NOMINMAX;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_USRDLL;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(FurnaceDir);$(FurnaceDir)furnace\src;$(FurnaceDir)furnace\src\engine;$(FurnaceDir)furnace\extern;$(FurnaceDir)furnace\extern\blip_buf;$(FurnaceDir)furnace\extern\fmt\include;$(FurnaceDir)furnace\extern\IconFontCppHeaders;$(FurnaceDir)furnace\extern\vgsound_emu-modified;$(FurnaceDir)furnace\src\icon;$(ProjectDir)zlib;$(SdkDir)foobar2000\SDK;$(SdkDir)foobar2000\helpers;$(SdkDir)foobar2000;$(SdkDir)libPPUI;$(SdkDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/wd4201 /wd4706 /wd4244 /wd4267 /wd4305 /Zc:char8_t- /utf-8 /FS %(AdditionalOptions)</AdditionalOptions>
+      <ObjectFileName>$(IntDir)%(RelativeDir)\</ObjectFileName>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SdkDir)foobar2000\shared\shared-$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent>
+      <Command>pwsh.exe -NoLogo -NonInteractive -NoProfile -File "$(ProjectDir)Build-FB2KComponent.ps1" "$(TargetName)" "$(TargetFileName)" "$(Platform)" "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <!-- Release|Win32 -->
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_USE_MATH_DEFINES;NOMINMAX;_CRT_SECURE_NO_WARNINGS;_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR;_WINDOWS;_USRDLL;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(FurnaceDir);$(FurnaceDir)furnace\src;$(FurnaceDir)furnace\src\engine;$(FurnaceDir)furnace\extern;$(FurnaceDir)furnace\extern\blip_buf;$(FurnaceDir)furnace\extern\fmt\include;$(FurnaceDir)furnace\extern\IconFontCppHeaders;$(FurnaceDir)furnace\extern\vgsound_emu-modified;$(FurnaceDir)furnace\src\icon;$(ProjectDir)zlib;$(SdkDir)foobar2000\SDK;$(SdkDir)foobar2000\helpers;$(SdkDir)foobar2000;$(SdkDir)libPPUI;$(SdkDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/wd4201 /wd4706 /wd4244 /wd4267 /wd4305 /Zc:char8_t- /utf-8 /FS %(AdditionalOptions)</AdditionalOptions>
+      <ObjectFileName>$(IntDir)%(RelativeDir)\</ObjectFileName>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <StringPooling>true</StringPooling>
+      <OmitFramePointers>true</OmitFramePointers>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SdkDir)foobar2000\shared\shared-$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent>
+      <Command>pwsh.exe -NoLogo -NonInteractive -NoProfile -File "$(ProjectDir)Build-FB2KComponent.ps1" "$(TargetName)" "$(TargetFileName)" "$(Platform)" "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <!-- Release|x64 -->
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_USE_MATH_DEFINES;NOMINMAX;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_USRDLL;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(FurnaceDir);$(FurnaceDir)furnace\src;$(FurnaceDir)furnace\src\engine;$(FurnaceDir)furnace\extern;$(FurnaceDir)furnace\extern\blip_buf;$(FurnaceDir)furnace\extern\fmt\include;$(FurnaceDir)furnace\extern\IconFontCppHeaders;$(FurnaceDir)furnace\extern\vgsound_emu-modified;$(FurnaceDir)furnace\src\icon;$(ProjectDir)zlib;$(SdkDir)foobar2000\SDK;$(SdkDir)foobar2000\helpers;$(SdkDir)foobar2000;$(SdkDir)libPPUI;$(SdkDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/wd4201 /wd4706 /wd4244 /wd4267 /wd4305 /Zc:char8_t- /utf-8 /FS %(AdditionalOptions)</AdditionalOptions>
+      <ObjectFileName>$(IntDir)%(RelativeDir)\</ObjectFileName>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <StringPooling>true</StringPooling>
+      <OmitFramePointers>true</OmitFramePointers>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SdkDir)foobar2000\shared\shared-$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent>
+      <Command>pwsh.exe -NoLogo -NonInteractive -NoProfile -File "$(ProjectDir)Build-FB2KComponent.ps1" "$(TargetName)" "$(TargetFileName)" "$(Platform)" "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+
+  <!-- ===== Component source files ===== -->
+  <ItemGroup>
+    <ClCompile Include="component_version.cpp" />
+    <ClCompile Include="preferences.cpp" />
+    <ClCompile Include="input_furnace.cpp" />
+  </ItemGroup>
+
+  <!-- ===== Resource file ===== -->
+  <ItemGroup>
+    <ResourceCompile Include="foo_furnace.rc" />
+  </ItemGroup>
+
+  <!-- ===== zlib (bundled) ===== -->
+  <ItemGroup>
+    <ClCompile Include="zlib\adler32.c" />
+    <ClCompile Include="zlib\crc32.c" />
+    <ClCompile Include="zlib\inffast.c" />
+    <ClCompile Include="zlib\inflate.c" />
+    <ClCompile Include="zlib\inftrees.c" />
+    <ClCompile Include="zlib\zutil.c" />
+  </ItemGroup>
+
+  <!-- ===== Furnace extern libraries ===== -->
+  <ItemGroup>
+    <ClCompile Include="$(FurnaceDir)furnace\extern\adpcm-xq-s\adpcm-lib.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\adpcm\bs_codec.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\adpcm\oki_codec.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\adpcm\yma_codec.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\adpcm\ymb_codec.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\adpcm\ymz_codec.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\blip_buf\blip_buf.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\emu2413\emu2413.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\ESFMu\esfm.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\ESFMu\esfm_registers.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\fmt\src\format.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\fmt\src\os.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\itcompress\compression.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\Nuked-OPLL\opll.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\Nuked-PSG\ympsg.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\opl\opl3.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\opm\opm.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\opn\ym3438.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\pwrnoise\pwrnoise.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\SAASound\src\SAAAmp.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\SAASound\src\SAAConfig.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\SAASound\src\SAADevice.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\SAASound\src\SAAEnv.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\SAASound\src\SAAFreq.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\SAASound\src\SAAImpl.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\SAASound\src\SAANoise.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\SAASound\src\SAASndC.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\SAASound\src\SAASound.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\vgsound_emu-modified\vgsound_emu\src\core\vox\vox.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\vgsound_emu-modified\vgsound_emu\src\es550x\es5504.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\vgsound_emu-modified\vgsound_emu\src\es550x\es5505.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\vgsound_emu-modified\vgsound_emu\src\es550x\es5506.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\vgsound_emu-modified\vgsound_emu\src\es550x\es550x.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\vgsound_emu-modified\vgsound_emu\src\es550x\es550x_alu.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\vgsound_emu-modified\vgsound_emu\src\es550x\es550x_filter.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\vgsound_emu-modified\vgsound_emu\src\k005289\k005289.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\vgsound_emu-modified\vgsound_emu\src\k007232\k007232.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\vgsound_emu-modified\vgsound_emu\src\k053260\k053260.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\vgsound_emu-modified\vgsound_emu\src\msm6295\msm6295.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\vgsound_emu-modified\vgsound_emu\src\n163\n163.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\vgsound_emu-modified\vgsound_emu\src\scc\scc.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\vgsound_emu-modified\vgsound_emu\src\vrcvi\vrcvi.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\vgsound_emu-modified\vgsound_emu\src\x1_010\x1_010.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\YM2608-LLE\fmopna_2608.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\YM2608-LLE\fmopna_2610.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\YM2608-LLE\fmopna_2612.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\YM2608-LLE\fmopna_impl.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(FurnaceDir)furnace\extern\YM3812-LLE\fmopl2.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\YMF262-LLE\fmopl3.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\extern\YMF276-LLE\fmopn2.c" />
+  </ItemGroup>
+
+  <!-- ===== Furnace engine core ===== -->
+  <ItemGroup>
+    <ClCompile Include="$(FurnaceDir)furnace\src\audio\abstract.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\audio\midi.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\audio\pipe.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\baseutils.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\brrUtils.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\cmdStream.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\cmdStreamOps.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\config.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\configEngine.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\dispatchContainer.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\effect\abstract.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\effect\dummy.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\engine.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\export.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\exportDef.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\export\abstract.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\export\amigaValidation.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\export\sapr.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\export\tiuna.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\export\zsm.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\fileOpsIns.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\fileOpsSample.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\fileOps\dmf.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\fileOps\fc.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\fileOps\fileOpsCommon.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\fileOps\ftm.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\fileOps\fur.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\fileOps\it.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\fileOps\mod.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\fileOps\p.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\fileOps\p86.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\fileOps\pdx.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\fileOps\ppc.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\fileOps\pps.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\fileOps\pvi.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\fileOps\pzi.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\fileOps\s3m.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\fileOps\text.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\fileOps\tfm.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\fileOps\xm.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\filter.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\instrument.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\macroInt.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\pattern.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\pitchTable.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\playback.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\safeReader.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\safeWriter.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\sample.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\song.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\sysDef.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\vgmOps.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\waveSynth.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\wavetable.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\wavOps.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\workPool.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\fileutils.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\log.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\utfutils.cpp" />
+  </ItemGroup>
+
+  <!-- ===== Furnace platform implementations ===== -->
+  <ItemGroup>
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\abstract.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\amiga.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\arcade.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\ay.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\ay8930.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\bifurcator.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\bubsyswsg.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\c140.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\c64.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\dave.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\dummy.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\es5506.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\esfm.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\fds.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\ga20.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\gb.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\gbadma.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\gbaminmod.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\genesis.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\genesisext.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\k007232.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\k053260.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\lynx.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\mmc5.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\msm5232.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\msm6258.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\msm6295.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\n163.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\namcowsg.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\nds.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\nes.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\opl.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\oplAInterface.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\opll.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\pce.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\pcmdac.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\pcspkr.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\pet.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\pokemini.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\pokey.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\pong.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\powernoise.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\pv1000.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\qsound.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\rf5c68.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\saa.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\scc.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\scvtone.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\segapcm.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sid2.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sid3.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sm8521.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sms.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\snes.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\su.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\supervision.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\swan.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\t6w28.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\ted.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\tia.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\tx81z.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\vb.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\vera.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\vic20.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\vrc6.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\x1_010.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\ym2203.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\ym2203ext.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\ym2608.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\ym2608ext.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\ym2608Interface.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\ym2610.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\ym2610b.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\ym2610bext.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\ym2610ext.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\ym2610Interface.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\ymz280b.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\zxbeeper.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\zxbeeperquadtone.cpp" />
+  </ItemGroup>
+
+  <!-- ===== Furnace platform sound cores ===== -->
+  <ItemGroup>
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\atomicssg\ssg.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\ay8910.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c140_c219.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64\envelope.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64\extfilt.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64\filter.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64\pot.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64\sid.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64\version.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64\voice.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64\wave.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64\wave6581_PST.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64\wave6581_PS_.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64\wave6581_P_T.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64\wave6581__ST.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64\wave8580_PST.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64\wave8580_PS_.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64\wave8580_P_T.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64\wave8580__ST.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64_d\dsid.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64_fp\array.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64_fp\Dac.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64_fp\EnvelopeGenerator.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64_fp\ExternalFilter.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64_fp\Filter.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64_fp\Filter6581.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64_fp\Filter8580.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64_fp\FilterModelConfig.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64_fp\FilterModelConfig6581.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64_fp\FilterModelConfig8580.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64_fp\Integrator6581.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64_fp\Integrator8580.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64_fp\OpAmp.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64_fp\resample\SincResampler.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64_fp\SID.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64_fp\Spline.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64_fp\WaveformCalculator.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\c64_fp\WaveformGenerator.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\d65modified.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\dave\dave.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\ga20\iremga20.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\gb\apu.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\gb\timing.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\lynx\Mikey.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\namco.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\nds.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\nes\apu.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\nes\fds.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\nes\mmc5.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\nes_nsfplay\5e01_apu.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\nes_nsfplay\5e01_dmc.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\nes_nsfplay\nes_apu.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\nes_nsfplay\nes_dmc.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\nes_nsfplay\nes_fds.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\nes_nsfplay\nes_mmc5.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\nes_nsfplay\nes_n106.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\nes_nsfplay\nes_vrc6.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\oki\msm5232.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\oki\okim6258.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\pce_psg.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\pokey\AltASAP.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\pokey\mzpokeysnd.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\qsound.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\rf5c68.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\saa1099.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\segapcm.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\sid2\envelope.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\sid2\filter.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\sid2\sid.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\sid2\version.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\sid2\voice.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\sid2\wave.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\sid2\wave8580_PST.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\sid2\wave8580_PS_.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\sid2\wave8580_P_T.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\sid2\wave8580__ST.cc" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\sid3.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\sm8521.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\sn76496.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\snes\SPC_DSP.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\su.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\supervision.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\swan.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\swan_mdfn.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\t6w28\T6W28_Apu.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\ted-sound.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\tia\Audio.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\tia\AudioChannel.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\upd1771.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\vera_pcm.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\vera_psg.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\vic20sound.c" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\vsu.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\ymf278b\ymf278.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\ymfm\ymfm_adpcm.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\ymfm\ymfm_opl.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\ymfm\ymfm_opm.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\ymfm\ymfm_opn.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\ymfm\ymfm_opz.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\ymfm\ymfm_pcm.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\ymfm\ymfm_ssg.cpp" />
+    <ClCompile Include="$(FurnaceDir)furnace\src\engine\platform\sound\ymz280b.cpp" />
+  </ItemGroup>
+
+  <!-- ===== SDK project references ===== -->
+  <ItemGroup>
+    <ProjectReference Include="$(SdkDir)pfc\pfc.vcxproj">
+      <Project>{EBFFFB4E-261D-44D3-B89C-957B31A0BF9C}</Project>
+      <AdditionalProperties Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Configuration=Debug FB2K;Platform=Win32</AdditionalProperties>
+      <AdditionalProperties Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Configuration=Release FB2K;Platform=Win32</AdditionalProperties>
+      <AdditionalProperties Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Configuration=Debug FB2K;Platform=x64</AdditionalProperties>
+      <AdditionalProperties Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Configuration=Release FB2K;Platform=x64</AdditionalProperties>
+    </ProjectReference>
+    <ProjectReference Include="$(SdkDir)foobar2000\SDK\foobar2000_SDK.vcxproj">
+      <Project>{E8091321-D79D-4575-86EF-064EA1A4A20D}</Project>
+    </ProjectReference>
+    <ProjectReference Include="$(SdkDir)foobar2000\foobar2000_component_client\foobar2000_component_client.vcxproj">
+      <Project>{71AD2674-065B-48F5-B8B0-E1F9D3892081}</Project>
+    </ProjectReference>
+    <ProjectReference Include="$(SdkDir)foobar2000\helpers\foobar2000_sdk_helpers.vcxproj">
+      <Project>{EE47764E-A202-4F85-A767-ABDAB4AFF35F}</Project>
+    </ProjectReference>
+    <ProjectReference Include="$(SdkDir)libPPUI\libPPUI.vcxproj">
+      <Project>{7729EB82-4069-4414-964B-AD399091A03F}</Project>
+    </ProjectReference>
+  </ItemGroup>
+
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <!-- Create intermediate directories for deep Furnace source tree -->
+  <Target Name="CreateObjDirs" BeforeTargets="ClCompile">
+    <ItemGroup>
+      <_ObjDirs Include="@(ClCompile->'$(IntDir)%(RelativeDir)')" />
+    </ItemGroup>
+    <MakeDir Directories="@(_ObjDirs)" />
+  </Target>
+</Project>

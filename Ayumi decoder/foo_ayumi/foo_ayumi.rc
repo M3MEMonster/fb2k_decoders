@@ -1,0 +1,12 @@
+#include <winres.h>
+#include "resource.h"
+
+IDD_AYUMI_PREFERENCES DIALOGEX 0, 0, 220, 48
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Default duration (M:SS):", IDC_STATIC, 6, 10, 90, 8
+    EDITTEXT        IDC_EDIT_DURATION, 100, 8, 40, 14, ES_AUTOHSCROLL | WS_TABSTOP
+    LTEXT           "e.g. 3:00", IDC_STATIC_DURATION_HINT, 144, 10, 40, 8
+    CONTROL         "Play indefinitely", IDC_CHECK_PLAY_INDEFINITELY, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 6, 28, 90, 10
+END

@@ -70,7 +70,6 @@ public:
 	}
 	void on_playback_seek(double t) override {
 		g_cached_time.store(t, std::memory_order_relaxed);
-		dispatch_refresh_playing();
 	}
 	void on_playback_pause(bool) override {}
 	void on_playback_edited(metadb_handle_ptr) override {}
@@ -78,15 +77,8 @@ public:
 	void on_playback_dynamic_info_track(const file_info &) override {}
 	void on_playback_time(double t) override {
 		g_cached_time.store(t, std::memory_order_relaxed);
-		dispatch_refresh_playing();
 	}
 	void on_volume_change(float) override {}
-private:
-	static void dispatch_refresh_playing() {
-		metadb_handle_ptr h;
-		if (playback_control::get()->get_now_playing(h))
-			metadb_io::get()->dispatch_refresh(h);
-	}
 };
 
 static play_callback_static_factory_t<global_play_callback> g_global_cb;

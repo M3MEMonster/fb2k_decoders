@@ -6,12 +6,15 @@
 #include "xmp_config.h"
 
 #include <SDK/cfg_var.h>
+#include <helpers/atl-misc.h>
+#include <helpers/DarkMode.h>
+#include <libPPUI/CListControlOwnerData.h>
+#include <libPPUI/CListControl-Cells.h>
 
 #include <algorithm>
 #include <set>
 #include <string>
 #include <sstream>
-#include <commctrl.h>
 
 // ============================================================================
 // Persistent config: semicolon-delimited list of disabled extension keys
@@ -140,16 +143,22 @@ bool is_format_enabled(const char* ext) {
 // ============================================================================
 
 class CXMPPrefs : public CDialogImpl<CXMPPrefs>,
-                  public preferences_page_instance {
+                  public preferences_page_instance,
+                  private IListControlOwnerDataSource,
+                  private IListControlOwnerDataCells {
 public:
     enum { IDD = IDD_XMP_PREFS };
 
-    CXMPPrefs(preferences_page_callback::ptr cb) : m_cb(cb) {}
+    CXMPPrefs(preferences_page_callback::ptr cb)
+        : m_cb(cb)
+        , m_list(static_cast<IListControlOwnerDataSource*>(this),
+                 static_cast<IListControlOwnerDataCells*>(this))
+    {}
 
     fb2k::hwnd_t get_wnd() override { return m_hWnd; }
 
     t_uint32 get_state() override {
-        t_uint32 s = preferences_state::resettable;
+        t_uint32 s = preferences_state::resettable | preferences_state::dark_mode_supported;
         if (m_dis != m_saved) s |= preferences_state::changed;
         return s;
     }
@@ -162,79 +171,66 @@ public:
 
     void reset() override {
         m_dis.clear();
-        m_init = true;
-        RefreshChecks();
-        m_init = false;
+        m_saved = m_dis;
+        m_list.ReloadData();
         m_cb->on_state_changed();
     }
 
     BEGIN_MSG_MAP_EX(CXMPPrefs)
         MSG_WM_INITDIALOG(OnInit)
-        NOTIFY_HANDLER_EX(IDC_FORMAT_LIST, LVN_ITEMCHANGED, OnChanged)
     END_MSG_MAP()
 
 private:
     BOOL OnInit(CWindow, LPARAM) {
-        m_lv = GetDlgItem(IDC_FORMAT_LIST);
-        ListView_SetExtendedListViewStyle(m_lv,
-            LVS_EX_CHECKBOXES | LVS_EX_FULLROWSELECT | LVS_EX_DOUBLEBUFFER);
+        m_list.CreateInDialog(*this, IDC_FORMAT_LIST);
+        m_dark.AddDialogWithControls(*this);
 
-        LVCOLUMN col{};
-        col.mask = LVCF_WIDTH | LVCF_TEXT;
-        col.cx = 600;
-        col.pszText = const_cast<LPWSTR>(L"Format");
-        ListView_InsertColumn(m_lv, 0, &col);
+        auto DPI = m_list.GetDPI();
+        m_list.AddColumn("On",        MulDiv(36,  DPI.cx, 96));
+        m_list.AddColumn("Extension", MulDiv(55,  DPI.cx, 96));
+        m_list.AddColumn("Format",    MulDiv(380, DPI.cx, 96));
 
         m_dis   = parse_set(cfg_disabled.get_ptr());
         m_saved = m_dis;
 
-        m_init = true;
-        for (int i = 0; i < NUM_FMTS; i++) {
-            pfc::stringcvt::string_wide_from_utf8 wl(g_fmts[i].label);
-            LVITEMW it{};
-            it.mask    = LVIF_TEXT;
-            it.iItem   = i;
-            it.pszText = const_cast<LPWSTR>(wl.get_ptr());
-            ListView_InsertItem(m_lv, &it);
-            ListView_SetCheckState(m_lv, i,
-                m_dis.find(g_fmts[i].key) == m_dis.end() ? TRUE : FALSE);
-        }
-        m_init = false;
-
-        RECT rc;
-        ::GetClientRect(m_lv, &rc);
-        ListView_SetColumnWidth(m_lv, 0,
-            rc.right - rc.left - GetSystemMetrics(SM_CXVSCROLL));
+        m_list.ReloadData();
         return FALSE;
     }
 
-    LRESULT OnChanged(LPNMHDR ph) {
-        if (m_init) return 0;
-        auto* p = reinterpret_cast<LPNMLISTVIEW>(ph);
-        if (!(p->uChanged & LVIF_STATE)) return 0;
-        if (!((p->uNewState ^ p->uOldState) & LVIS_STATEIMAGEMASK)) return 0;
-
-        int i = p->iItem;
-        if (i < 0 || i >= NUM_FMTS) return 0;
-
-        if (ListView_GetCheckState(m_lv, i))
-            m_dis.erase(g_fmts[i].key);
-        else
-            m_dis.insert(g_fmts[i].key);
-
-        m_cb->on_state_changed();
-        return 0;
+    // IListControlOwnerDataSource
+    size_t listGetItemCount(ctx_t) override { return (size_t)NUM_FMTS; }
+    pfc::string8 listGetSubItemText(ctx_t, size_t item, size_t subItem) override {
+        if (item >= (size_t)NUM_FMTS) return "";
+        switch (subItem) {
+        case 0: return "";
+        case 1: return g_fmts[item].key;
+        case 2: return g_fmts[item].label;
+        default: return "";
+        }
     }
+    void listSubItemClicked(ctx_t, size_t, size_t) override {}
 
-    void RefreshChecks() {
-        for (int i = 0; i < NUM_FMTS; i++)
-            ListView_SetCheckState(m_lv, i,
-                m_dis.find(g_fmts[i].key) == m_dis.end() ? TRUE : FALSE);
+    // IListControlOwnerDataCells
+    CListControl::cellType_t listCellType(cellsCtx_t, size_t, size_t subItem) override {
+        if (subItem == 0) return &PFC_SINGLETON(CListCell_Checkbox);
+        return &PFC_SINGLETON(CListCell_Text);
+    }
+    bool listCellCheckState(cellsCtx_t, size_t item, size_t subItem) override {
+        if (subItem == 0 && item < (size_t)NUM_FMTS)
+            return m_dis.find(g_fmts[item].key) == m_dis.end();
+        return false;
+    }
+    void listCellSetCheckState(cellsCtx_t, size_t item, size_t subItem, bool state) override {
+        if (subItem == 0 && item < (size_t)NUM_FMTS) {
+            if (state) m_dis.erase(g_fmts[item].key);
+            else       m_dis.insert(g_fmts[item].key);
+            m_cb->on_state_changed();
+        }
     }
 
     preferences_page_callback::ptr m_cb;
-    HWND m_lv = nullptr;
-    bool m_init = false;
+    fb2k::CDarkModeHooks m_dark;
+    CListControlOwnerDataCells m_list;
     std::set<std::string> m_dis, m_saved;
 };
 

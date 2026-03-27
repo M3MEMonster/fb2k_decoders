@@ -3,10 +3,9 @@
 
 IDD_XMP_PREFS DIALOGEX 0, 0, 300, 220
 STYLE DS_SETFONT | WS_CHILD
-FONT 8, "Segoe UI", 400, 0
+FONT 8, "MS Shell Dlg", 400, 0
 BEGIN
-    LTEXT           "Enable or disable individual libXMP format decoders:", -1, 4, 4, 292, 10
-    CONTROL         "", IDC_FORMAT_LIST, "SysListView32",
-                    LVS_REPORT | LVS_SINGLESEL | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,
-                    4, 18, 292, 198
+    CONTROL     "", IDC_FORMAT_LIST, "SysListView32",
+                LVS_REPORT | LVS_SINGLESEL | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,
+                0, 0, 300, 220
 END

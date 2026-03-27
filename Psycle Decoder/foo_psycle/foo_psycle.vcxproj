@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-<ProjectConfiguration Include="Debug|x64">
+    <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
@@ -13,7 +13,7 @@
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-<ProjectConfiguration Include="Release|x64">
+    <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
@@ -32,7 +32,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
-<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
@@ -45,7 +45,7 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
-<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
@@ -60,13 +60,13 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
@@ -79,7 +79,7 @@
     <TargetExt>.dll</TargetExt>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
-<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <TargetExt>.dll</TargetExt>
@@ -91,7 +91,7 @@
     <TargetExt>.dll</TargetExt>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
-<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <TargetExt>.dll</TargetExt>
@@ -120,11 +120,11 @@
       <AdditionalDependencies>$(SdkDir)foobar2000\shared\shared-$(Platform).lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
-      <PostBuildEvent>
+    <PostBuildEvent>
       <Command>pwsh.exe -NoLogo -NonInteractive -NoProfile -File "$(ProjectDir)Build-FB2KComponent.ps1" "$(TargetName)" "$(TargetFileName)" "$(Platform)" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
@@ -147,7 +147,7 @@
       <AdditionalDependencies>$(SdkDir)foobar2000\shared\shared-$(Platform).lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
-      <PostBuildEvent>
+    <PostBuildEvent>
       <Command>pwsh.exe -NoLogo -NonInteractive -NoProfile -File "$(ProjectDir)Build-FB2KComponent.ps1" "$(TargetName)" "$(TargetFileName)" "$(Platform)" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -179,11 +179,11 @@
       <AdditionalDependencies>$(SdkDir)foobar2000\shared\shared-$(Platform).lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
-      <PostBuildEvent>
+    <PostBuildEvent>
       <Command>pwsh.exe -NoLogo -NonInteractive -NoProfile -File "$(ProjectDir)Build-FB2KComponent.ps1" "$(TargetName)" "$(TargetFileName)" "$(Platform)" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -211,16 +211,14 @@
       <AdditionalDependencies>$(SdkDir)foobar2000\shared\shared-$(Platform).lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
-      <PostBuildEvent>
+    <PostBuildEvent>
       <Command>pwsh.exe -NoLogo -NonInteractive -NoProfile -File "$(ProjectDir)Build-FB2KComponent.ps1" "$(TargetName)" "$(TargetFileName)" "$(Platform)" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  
   <ItemGroup>
     <ClCompile Include="foo_psycle.cpp" />
     <ClCompile Include="component_version.cpp" />
   </ItemGroup>
-  
   <ItemGroup>
     <ClCompile Include="$(PsycleDir)external-packages\boost-1.55.0\libs\filesystem\src\codecvt_error_category.cpp" />
     <ClCompile Include="$(PsycleDir)external-packages\boost-1.55.0\libs\filesystem\src\operations.cpp" />
@@ -235,7 +233,6 @@
     <ClCompile Include="$(PsycleDir)external-packages\boost-1.55.0\libs\signals\src\trackable.cpp" />
     <ClCompile Include="$(PsycleDir)external-packages\boost-1.55.0\libs\system\src\error_code.cpp" />
   </ItemGroup>
-  
   <ItemGroup>
     <ClCompile Include="$(PsycleDir)external-packages\fluidsynth\src\fake_glib.cpp" />
     <ClCompile Include="$(PsycleDir)external-packages\fluidsynth\src\midi\fluid_midi.c" />
@@ -264,7 +261,6 @@
     <ClCompile Include="$(PsycleDir)external-packages\fluidsynth\src\utils\fluid_settings.c" />
     <ClCompile Include="$(PsycleDir)external-packages\fluidsynth\src\utils\fluid_sys.c" />
   </ItemGroup>
-  
   <ItemGroup>
     <ClCompile Include="$(PsycleDir)external-packages\lua-5.2\src\lapi.c" />
     <ClCompile Include="$(PsycleDir)external-packages\lua-5.2\src\lauxlib.c" />
@@ -300,7 +296,6 @@
     <ClCompile Include="$(PsycleDir)external-packages\lua-5.2\src\lvm.c" />
     <ClCompile Include="$(PsycleDir)external-packages\lua-5.2\src\lzio.c" />
   </ItemGroup>
-  
   <ItemGroup>
     <ClCompile Include="$(PsycleDir)external-packages\stk-4.5.0\stk\ADSR.cpp" />
     <ClCompile Include="$(PsycleDir)external-packages\stk-4.5.0\stk\Delay.cpp" />
@@ -315,7 +310,6 @@
     <ClCompile Include="$(PsycleDir)external-packages\stk-4.5.0\stk\Shakers.cpp" />
     <ClCompile Include="$(PsycleDir)external-packages\stk-4.5.0\stk\Stk.cpp" />
   </ItemGroup>
-  
   <ItemGroup>
     <ClCompile Include="$(PsycleDir)psycle-helpers\src\psycle\helpers\abstractiff.cpp" />
     <ClCompile Include="$(PsycleDir)psycle-helpers\src\psycle\helpers\amigasvx.cpp" />
@@ -336,7 +330,6 @@
     <ClCompile Include="$(PsycleDir)psycle-helpers\src\psycle\helpers\riff.cpp" />
     <ClCompile Include="$(PsycleDir)psycle-helpers\src\psycle\helpers\riffwave.cpp" />
   </ItemGroup>
-  
   <ItemGroup>
     <ClCompile Include="$(PsycleDir)psycle-plugins\src\psycle\plugins\alk_muter\alk_muter.cpp" />
     <ClCompile Include="$(PsycleDir)psycle-plugins\src\psycle\plugins\arguru_compressor\arguru_compressor.cpp" />
@@ -465,7 +458,6 @@
     <ClCompile Include="$(PsycleDir)psycle-plugins\src\psycle\plugins\zephod_super_fm\envelope.cpp" />
     <ClCompile Include="$(PsycleDir)psycle-plugins\src\psycle\plugins\zephod_super_fm\zephod_superfm.cpp" />
   </ItemGroup>
-  
   <ItemGroup>
     <ClCompile Include="$(PsycleDir)psycle\src\psycle\host\AudioDriver.cpp" />
     <ClCompile Include="$(PsycleDir)psycle\src\psycle\host\Canvas.cpp" />
@@ -584,14 +576,12 @@
     <ClCompile Include="$(PsycleDir)psycle\src\psycle\host\XMSongExport.cpp" />
     <ClCompile Include="$(PsycleDir)psycle\src\psycle\host\XMSongLoader.cpp" />
   </ItemGroup>
-  
   <ItemGroup>
     <ClCompile Include="$(PsycleDir)psycle\src\Seib-vsthost\CVSTHost.Seib.cpp" />
     <ClCompile Include="$(PsycleDir)psycle\src\Seib-vsthost\CVSTPreset.cpp" />
     <ClCompile Include="$(PsycleDir)psycle\src\Seib-vsthost\EffectWnd.cpp" />
     <ClCompile Include="$(PsycleDir)psycle\src\Seib-vsthost\JBridgeEnabler.cpp" />
   </ItemGroup>
-  
   <ItemGroup>
     <ClCompile Include="$(PsycleDir)universalis\src\universalis\compiler\exception.compiler.cpp" />
     <ClCompile Include="$(PsycleDir)universalis\src\universalis\compiler\typenameof.cpp" />
@@ -606,7 +596,6 @@
     <ClCompile Include="$(PsycleDir)universalis\src\universalis\os\thread_name.cpp" />
     <ClCompile Include="$(PsycleDir)universalis\src\universalis\stdlib\exception.stdlib.cpp" />
   </ItemGroup>
-  
   <ItemGroup>
     <ProjectReference Include="$(SdkDir)pfc\pfc.vcxproj">
       <Project>{EBFFFB4E-261D-44D3-B89C-957B31A0BF9C}</Project>

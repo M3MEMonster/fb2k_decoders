@@ -1,0 +1,7 @@
+#pragma once
+
+#define IDD_AYUMI_PREFERENCES       101
+
+#define IDC_EDIT_DURATION           1001
+#define IDC_STATIC_DURATION_HINT    1002
+#define IDC_CHECK_PLAY_INDEFINITELY 1003

@@ -43,6 +43,9 @@ extern "C" {
 
 #include "resource.h"
 #include <helpers/atl-misc.h>
+#include <helpers/DarkMode.h>
+#include <libPPUI/CListControlOwnerData.h>
+#include <libPPUI/CListControl-Cells.h>
 #include <SDK/cfg_var.h>
 
 // Stub for libPPUI symbol required by atl-misc.h helpers
@@ -1081,15 +1084,20 @@ static initquit_factory_t<initquit_uade> g_initquit_uade;
 // ---------------------------------------------------------------------------
 
 class CUADEDecoders : public CDialogImpl<CUADEDecoders>,
-                      public preferences_page_instance {
+                      public preferences_page_instance,
+                      private IListControlOwnerDataSource,
+                      private IListControlOwnerDataCells {
 public:
     enum { IDD = IDD_UADE_DECODERS };
 
     CUADEDecoders(preferences_page_callback::ptr callback)
-        : m_callback(callback) {}
+        : m_callback(callback)
+        , m_list(static_cast<IListControlOwnerDataSource*>(this),
+                 static_cast<IListControlOwnerDataCells*>(this))
+    {}
 
     t_uint32 get_state() override {
-        t_uint32 state = preferences_state::resettable;
+        t_uint32 state = preferences_state::resettable | preferences_state::dark_mode_supported;
         if (m_dirty) state |= preferences_state::changed;
         return state;
     }
@@ -1098,30 +1106,60 @@ public:
 
     BEGIN_MSG_MAP_EX(CUADEDecoders)
         MSG_WM_INITDIALOG(OnInitDialog)
-        NOTIFY_HANDLER_EX(IDC_DECODER_LIST, LVN_ITEMCHANGED, OnItemChanged)
-        COMMAND_HANDLER_EX(IDC_BTN_ENABLE_ALL, BN_CLICKED, OnEnableAll)
-        COMMAND_HANDLER_EX(IDC_BTN_DISABLE_ALL, BN_CLICKED, OnDisableAll)
-        COMMAND_HANDLER_EX(IDC_SAMPLERATE_COMBO, CBN_SELCHANGE, OnSampleRateChanged)
-        COMMAND_HANDLER_EX(IDC_PLAY_INDEFINITELY, BN_CLICKED, OnCheckChanged)
+        COMMAND_HANDLER_EX(IDC_BTN_ENABLE_ALL,     BN_CLICKED,    OnEnableAll)
+        COMMAND_HANDLER_EX(IDC_BTN_DISABLE_ALL,    BN_CLICKED,    OnDisableAll)
+        COMMAND_HANDLER_EX(IDC_SAMPLERATE_COMBO,   CBN_SELCHANGE, OnSampleRateChanged)
+        COMMAND_HANDLER_EX(IDC_PLAY_INDEFINITELY,  BN_CLICKED,    OnCheckChanged)
     END_MSG_MAP()
 
 private:
     BOOL OnInitDialog(CWindow, LPARAM);
-    LRESULT OnItemChanged(LPNMHDR pnmh);
     void OnEnableAll(UINT, int, CWindow);
     void OnDisableAll(UINT, int, CWindow);
     void OnSampleRateChanged(UINT, int, CWindow) { m_dirty = true; m_callback->on_state_changed(); }
     void OnCheckChanged(UINT, int, CWindow) { m_dirty = true; m_callback->on_state_changed(); }
-    void PopulateList();
 
     static const int s_sampleRates[];
     static const int s_numSampleRates;
 
+    // IListControlOwnerDataSource
+    size_t listGetItemCount(ctx_t) override { return g_format_list.size(); }
+    pfc::string8 listGetSubItemText(ctx_t, size_t item, size_t subItem) override {
+        if (item >= g_format_list.size()) return "";
+        switch (subItem) {
+        case 0: return "";
+        case 1: return g_format_list[item].prefix.c_str();
+        case 2: return g_format_list[item].playerName.c_str();
+        default: return "";
+        }
+    }
+    void listSubItemClicked(ctx_t, size_t, size_t) override {}
+
+    // IListControlOwnerDataCells
+    CListControl::cellType_t listCellType(cellsCtx_t, size_t, size_t subItem) override {
+        if (subItem == 0) return &PFC_SINGLETON(CListCell_Checkbox);
+        return &PFC_SINGLETON(CListCell_Text);
+    }
+    bool listCellCheckState(cellsCtx_t, size_t item, size_t subItem) override {
+        if (subItem == 0 && item < g_format_list.size())
+            return m_localDisabled.count(g_format_list[item].prefix) == 0;
+        return false;
+    }
+    void listCellSetCheckState(cellsCtx_t, size_t item, size_t subItem, bool state) override {
+        if (subItem == 0 && item < g_format_list.size()) {
+            if (state) m_localDisabled.erase(g_format_list[item].prefix);
+            else       m_localDisabled.insert(g_format_list[item].prefix);
+            m_dirty = true;
+            m_callback->on_state_changed();
+        }
+    }
+
     const preferences_page_callback::ptr m_callback;
-    CListViewCtrl m_list;
+    fb2k::CDarkModeHooks m_dark;
+    CListControlOwnerDataCells m_list;
     CComboBox m_srCombo;
+    std::unordered_set<std::string> m_localDisabled;
     bool m_dirty = false;
-    bool m_populating = false;
 };
 
 const int CUADEDecoders::s_sampleRates[] = {
@@ -1147,62 +1185,34 @@ BOOL CUADEDecoders::OnInitDialog(CWindow, LPARAM)
     if (selIdx < 0) selIdx = s_numSampleRates - 1;
     m_srCombo.SetCurSel(selIdx);
 
-    m_list = GetDlgItem(IDC_DECODER_LIST);
-    m_list.SetExtendedListViewStyle(
-        LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES | LVS_EX_CHECKBOXES);
-    m_list.AddColumn(_T("Format"), 0);
-    m_list.AddColumn(_T("Player"), 1);
-    m_list.SetColumnWidth(0, 100);
-    m_list.SetColumnWidth(1, 210);
+    m_localDisabled = g_disabled_formats;
 
-    PopulateList();
+    m_list.CreateInDialog(*this, IDC_DECODER_LIST);
+    m_dark.AddDialogWithControls(*this);
+
+    auto DPI = m_list.GetDPI();
+    m_list.AddColumn("On",     MulDiv(36,  DPI.cx, 96));
+    m_list.AddColumn("Format", MulDiv(100, DPI.cx, 96));
+    m_list.AddColumn("Player", MulDiv(320, DPI.cx, 96));
+
+    m_list.ReloadData();
     return FALSE;
-}
-
-void CUADEDecoders::PopulateList()
-{
-    m_populating = true;
-    m_list.DeleteAllItems();
-    for (int i = 0; i < (int)g_format_list.size(); i++) {
-        auto& fe = g_format_list[i];
-        CA2T prefW(fe.prefix.c_str());
-        m_list.AddItem(i, 0, prefW);
-        CA2T nameW(fe.playerName.c_str());
-        m_list.SetItemText(i, 1, nameW);
-        bool enabled = (g_disabled_formats.count(fe.prefix) == 0);
-        m_list.SetCheckState(i, enabled ? TRUE : FALSE);
-    }
-    m_populating = false;
-}
-
-LRESULT CUADEDecoders::OnItemChanged(LPNMHDR pnmh)
-{
-    if (m_populating) return 0;
-    LPNMLISTVIEW nlv = (LPNMLISTVIEW)pnmh;
-    if ((nlv->uChanged & LVIF_STATE) &&
-        ((nlv->uNewState ^ nlv->uOldState) & LVIS_STATEIMAGEMASK)) {
-        m_dirty = true;
-        m_callback->on_state_changed();
-    }
-    return 0;
 }
 
 void CUADEDecoders::OnEnableAll(UINT, int, CWindow)
 {
-    m_populating = true;
-    for (int i = 0; i < m_list.GetItemCount(); i++)
-        m_list.SetCheckState(i, TRUE);
-    m_populating = false;
+    m_localDisabled.clear();
+    m_list.ReloadData();
     m_dirty = true;
     m_callback->on_state_changed();
 }
 
 void CUADEDecoders::OnDisableAll(UINT, int, CWindow)
 {
-    m_populating = true;
-    for (int i = 0; i < m_list.GetItemCount(); i++)
-        m_list.SetCheckState(i, FALSE);
-    m_populating = false;
+    m_localDisabled.clear();
+    for (auto& fe : g_format_list)
+        m_localDisabled.insert(fe.prefix);
+    m_list.ReloadData();
     m_dirty = true;
     m_callback->on_state_changed();
 }
@@ -1216,11 +1226,7 @@ void CUADEDecoders::apply()
     if (sel >= 0 && sel < s_numSampleRates)
         g_cfg_sample_rate = s_sampleRates[sel];
 
-    g_disabled_formats.clear();
-    for (int i = 0; i < m_list.GetItemCount(); i++) {
-        if (!m_list.GetCheckState(i) && i < (int)g_format_list.size())
-            g_disabled_formats.insert(g_format_list[i].prefix);
-    }
+    g_disabled_formats = m_localDisabled;
     save_disabled_formats();
     if (!g_disabled_formats.empty()) {
         std::string list;
@@ -1241,11 +1247,8 @@ void CUADEDecoders::reset()
 {
     CheckDlgButton(IDC_PLAY_INDEFINITELY, BST_UNCHECKED);
     m_srCombo.SetCurSel(s_numSampleRates - 1);
-
-    m_populating = true;
-    for (int i = 0; i < m_list.GetItemCount(); i++)
-        m_list.SetCheckState(i, TRUE);
-    m_populating = false;
+    m_localDisabled.clear();
+    m_list.ReloadData();
     m_dirty = true;
     m_callback->on_state_changed();
 }

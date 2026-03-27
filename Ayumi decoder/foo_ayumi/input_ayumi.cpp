@@ -1,5 +1,9 @@
 #include "stdafx.h"
 
+// Declared in preferences.cpp
+unsigned GetAyumiDurationMs();
+bool GetAyumiPlayIndefinitely();
+
 extern "C" {
 #include "3rdParty/ayumi/ayumi.h"
 #include "3rdParty/ayumi/load_text.h"
@@ -16,7 +20,7 @@ extern "C" {
 static constexpr unsigned AYUMI_SAMPLE_RATE = 48000;
 static constexpr unsigned AYUMI_CHANNELS = 2;
 static constexpr unsigned DECODE_BLOCK_SAMPLES = 1024;
-static constexpr unsigned AYUMI_DEFAULT_DURATION_MS = 180000;
+// Default duration is configured via Preferences > Playback > Decoding > Ayumi
 
 static std::mutex s_fxm_mutex;
 
@@ -56,7 +60,8 @@ public:
     t_uint32 get_subsong(unsigned p_index) { return 0; }
 
     void get_info(t_uint32 p_subsong, file_info& p_info, abort_callback& p_abort) {
-        p_info.set_length(static_cast<double>(AYUMI_DEFAULT_DURATION_MS) / 1000.0);
+        // Keep a finite shown length in playlist/properties even when playback is indefinite.
+        p_info.set_length(static_cast<double>(GetAyumiDurationMs()) / 1000.0);
 
         p_info.info_set_int("samplerate", AYUMI_SAMPLE_RATE);
         p_info.info_set_int("channels", AYUMI_CHANNELS);
@@ -82,8 +87,6 @@ public:
         init_ayumi();
         m_has_ended = false;
         m_decode_pos_samples = 0;
-        m_max_decode_samples = static_cast<t_uint64>(
-            static_cast<double>(AYUMI_DEFAULT_DURATION_MS) / 1000.0 * AYUMI_SAMPLE_RATE);
     }
 
     bool decode_run(audio_chunk& p_chunk, abort_callback& p_abort) {
@@ -92,14 +95,18 @@ public:
         if (m_has_ended)
             return false;
 
-        if (m_max_decode_samples > 0 && m_decode_pos_samples >= m_max_decode_samples) {
+        const bool play_indefinitely = GetAyumiPlayIndefinitely();
+        const t_uint64 max_samples = play_indefinitely ? 0 : static_cast<t_uint64>(
+            static_cast<double>(GetAyumiDurationMs()) / 1000.0 * AYUMI_SAMPLE_RATE);
+
+        if (max_samples > 0 && m_decode_pos_samples >= max_samples) {
             m_has_ended = true;
             return false;
         }
 
         unsigned samples_to_produce = DECODE_BLOCK_SAMPLES;
-        if (m_max_decode_samples > 0) {
-            t_uint64 remaining = m_max_decode_samples - m_decode_pos_samples;
+        if (max_samples > 0) {
+            t_uint64 remaining = max_samples - m_decode_pos_samples;
             if (remaining < samples_to_produce)
                 samples_to_produce = static_cast<unsigned>(remaining);
         }
@@ -224,7 +231,6 @@ private:
 
     bool m_has_ended = false;
     t_uint64 m_decode_pos_samples = 0;
-    t_uint64 m_max_decode_samples = 0;
 
     std::vector<float> m_render_buf;
 };

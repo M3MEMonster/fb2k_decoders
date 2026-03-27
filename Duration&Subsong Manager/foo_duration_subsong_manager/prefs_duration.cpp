@@ -9,9 +9,11 @@ namespace {
 
 static pfc::string8 format_duration(double seconds) {
     if (seconds <= 0) return "0:00";
-    int mins = (int)(seconds / 60);
-    int secs = (int)fmod(seconds, 60.0);
-    int ms = (int)(fmod(seconds, 1.0) * 1000);
+    int total_ms = (int)(seconds * 1000 + 0.5);
+    int ms = total_ms % 1000;
+    int total_secs = total_ms / 1000;
+    int secs = total_secs % 60;
+    int mins = total_secs / 60;
     pfc::string8 out;
     out << mins << ":" << pfc::format_int(secs, 2);
     if (ms > 0) out << "." << pfc::format_int(ms, 3);
@@ -34,12 +36,16 @@ static double parse_duration(const char* str) {
             if (part_count < 2) part_count++;
         } else if (*p == '.') {
             p++;
-            double frac_div = 10.0;
+            int frac_int = 0;
+            int frac_digits = 0;
             while (*p >= '0' && *p <= '9') {
-                frac += (*p - '0') / frac_div;
-                frac_div *= 10.0;
+                frac_int = frac_int * 10 + (*p - '0');
+                frac_digits++;
                 p++;
             }
+            double divisor = 1.0;
+            for (int i = 0; i < frac_digits; i++) divisor *= 10.0;
+            frac = frac_int / divisor;
             continue;
         }
         p++;
@@ -115,9 +121,18 @@ public:
     bool listRemoveItems(ctx_t, pfc::bit_array const& mask) override;
 
     uint32_t listGetEditFlags(ctx_t, size_t, size_t) override { return 0; }
-    void listSubItemClicked(ctx_t, size_t, size_t) override {}
+    void listSubItemClicked(ctx_t, size_t, size_t subItem) override {
+        m_last_clicked_subitem = subItem;
+    }
     void listSelChanged(ctx_t) override {}
-    void listItemAction(ctx_t, size_t) override {}
+    void listItemAction(ctx_t ctx, size_t item) override {
+        if (m_last_clicked_subitem == 3) {
+            auto* list = const_cast<CListControlOwnerData*>(ctx);
+            list->TableEdit_Start(item, 3);
+        }
+    }
+
+    size_t m_last_clicked_subitem = SIZE_MAX;
 
     bool listKeyDown(ctx_t, UINT nChar, UINT, UINT) override;
 };
@@ -140,6 +155,24 @@ public:
 
     void apply() override {
         auto& db = duration_database::get();
+        metadb_handle_list affected;
+        auto metadb_api = metadb::get();
+
+        // Capture impacted items before mutating DB so deletions can be refreshed too.
+        for (auto& [hash, _dur] : m_host.m_pending_edits) {
+            auto rec = db.lookup_by_hash(hash.c_str());
+            if (rec) {
+                affected += metadb_api->handle_create(
+                    make_playable_location(rec->full_path.c_str(), rec->subsong_index));
+            }
+        }
+        for (auto& hash : m_host.m_pending_deletes) {
+            auto rec = db.lookup_by_hash(hash.c_str());
+            if (rec) {
+                affected += metadb_api->handle_create(
+                    make_playable_location(rec->full_path.c_str(), rec->subsong_index));
+            }
+        }
 
         for (auto& [hash, dur] : m_host.m_pending_edits) {
             db.update_duration(hash.c_str(), dur);
@@ -156,7 +189,7 @@ public:
         m_host.refresh_filter();
         m_list.ReloadData();
 
-        refresh_metadb();
+        refresh_metadb(affected);
         m_callback->on_state_changed();
     }
 
@@ -237,30 +270,28 @@ private:
         }
     }
 
-    void refresh_metadb() {
-        auto& db = duration_database::get();
-        auto all = db.get_all();
-        if (all.empty()) return;
-
-        metadb_handle_list handles;
-        auto metadb_api = metadb::get();
+    void refresh_metadb(const metadb_handle_list& handlesIn) {
+        if (handlesIn.get_count() == 0) return;
+        metadb_handle_list handles = handlesIn;
+        handles.remove_duplicates();
         abort_callback_dummy abort;
 
-        for (auto* rec : all) {
+        metadb_handle_list existing;
+        for (t_size i = 0; i < handles.get_count(); ++i) {
+            auto h = handles[i];
             bool exists = false;
             try {
-                exists = filesystem::g_exists(rec->full_path.c_str(), abort);
+                exists = filesystem::g_exists(h->get_path(), abort);
             } catch (...) {
                 exists = false;
             }
             if (!exists) continue;
-            handles += metadb_api->handle_create(
-                make_playable_location(rec->full_path.c_str(), rec->subsong_index));
+            existing += h;
         }
 
-        if (handles.get_count() > 0) {
+        if (existing.get_count() > 0) {
             metadb_io_v2::get()->load_info_async(
-                handles,
+                existing,
                 metadb_io::load_info_force,
                 m_hWnd,
                 metadb_io_v2::op_flag_delay_ui,

@@ -51,11 +51,13 @@ if (!(Test-Path $targetSource)) {
 }
 
 $extraCommon = @(
-    '3rdParty\UADE\data'
 )
 $extraX64 = @(
 
 )
+
+# UADE data must be deployed as 'uade/' (find_uade_data_path searches for 'uade/eagleplayer.conf')
+$uadeDataSrc = Join-Path $ProjectDir '3rdParty\UADE\data'
 
 function Copy-Optional([string[]]$paths, [string]$dest) {
     foreach($rel in $paths) {
@@ -83,6 +85,13 @@ elseif ($Platform -eq 'Win32') {
 else {
     Write-Host "Unknown platform: $Platform"
     exit 0
+}
+
+# Copy UADE data into 'uade/' subfolder (not 'data/') to match find_uade_data_path() expectations
+if (Test-Path $uadeDataSrc) {
+    $uadeDest = Join-Path $OutRoot 'uade'
+    if (-not (Test-Path $uadeDest)) { $null = New-Item -ItemType Directory -Path $uadeDest -Force }
+    Copy-Item -Path (Join-Path $uadeDataSrc '*') -Destination $uadeDest -Recurse -Force
 }
 
 if (Test-Path (Join-Path $OutRoot '*')) {

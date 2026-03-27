@@ -179,6 +179,10 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="input_ayumi.cpp" />
+    <ClCompile Include="preferences.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="foo_ayumi.rc" />
   </ItemGroup>
   
   <ItemGroup>
@@ -195,6 +199,7 @@
   
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   
   <ItemGroup>

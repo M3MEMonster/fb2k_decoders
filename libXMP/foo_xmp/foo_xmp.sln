@@ -11,6 +11,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "foobar2000_component_client
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pfc", "..\\..\\SDK-2025-03-07\\pfc\pfc.vcxproj", "{EBFFFB4E-261D-44D3-B89C-957B31A0BF9C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "foobar2000_sdk_helpers", "..\..\SDK-2025-03-07\foobar2000\helpers\foobar2000_sdk_helpers.vcxproj", "{EE47764E-A202-4F85-A767-ABDAB4AFF35F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libPPUI", "..\..\SDK-2025-03-07\libPPUI\libPPUI.vcxproj", "{7729EB82-4069-4414-964B-AD399091A03F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -51,6 +55,22 @@ Global
 		{EBFFFB4E-261D-44D3-B89C-957B31A0BF9C}.Release|x86.Build.0 = Release FB2K|Win32
 		{EBFFFB4E-261D-44D3-B89C-957B31A0BF9C}.Release|x64.ActiveCfg = Release FB2K|x64
 		{EBFFFB4E-261D-44D3-B89C-957B31A0BF9C}.Release|x64.Build.0 = Release FB2K|x64
+		{EE47764E-A202-4F85-A767-ABDAB4AFF35F}.Debug|x86.ActiveCfg = Debug|Win32
+		{EE47764E-A202-4F85-A767-ABDAB4AFF35F}.Debug|x86.Build.0 = Debug|Win32
+		{EE47764E-A202-4F85-A767-ABDAB4AFF35F}.Debug|x64.ActiveCfg = Debug|x64
+		{EE47764E-A202-4F85-A767-ABDAB4AFF35F}.Debug|x64.Build.0 = Debug|x64
+		{EE47764E-A202-4F85-A767-ABDAB4AFF35F}.Release|x86.ActiveCfg = Release|Win32
+		{EE47764E-A202-4F85-A767-ABDAB4AFF35F}.Release|x86.Build.0 = Release|Win32
+		{EE47764E-A202-4F85-A767-ABDAB4AFF35F}.Release|x64.ActiveCfg = Release|x64
+		{EE47764E-A202-4F85-A767-ABDAB4AFF35F}.Release|x64.Build.0 = Release|x64
+		{7729EB82-4069-4414-964B-AD399091A03F}.Debug|x86.ActiveCfg = Debug|Win32
+		{7729EB82-4069-4414-964B-AD399091A03F}.Debug|x86.Build.0 = Debug|Win32
+		{7729EB82-4069-4414-964B-AD399091A03F}.Debug|x64.ActiveCfg = Debug|x64
+		{7729EB82-4069-4414-964B-AD399091A03F}.Debug|x64.Build.0 = Debug|x64
+		{7729EB82-4069-4414-964B-AD399091A03F}.Release|x86.ActiveCfg = Release|Win32
+		{7729EB82-4069-4414-964B-AD399091A03F}.Release|x86.Build.0 = Release|Win32
+		{7729EB82-4069-4414-964B-AD399091A03F}.Release|x64.ActiveCfg = Release|x64
+		{7729EB82-4069-4414-964B-AD399091A03F}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

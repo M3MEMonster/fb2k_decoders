@@ -37,7 +37,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader><PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel><DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\SDK-2025-03-07\foobar2000;..\..\SDK-2025-03-07;3rdParty\libkss\modules;3rdParty\libkss\src;3rdParty\libkss\src\kss;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\SDK-2025-03-07\foobar2000;..\..\SDK-2025-03-07;..\..\SDK-2025-03-07\libPPUI;3rdParty\libkss\modules;3rdParty\libkss\src;3rdParty\libkss\src\kss;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard><LanguageStandard_C>stdc17</LanguageStandard_C>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4244;4267;4996;4018;4101;4305;4706</DisableSpecificWarnings>
@@ -53,7 +53,7 @@
       <Optimization>Disabled</Optimization><BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks><RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader><PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel><DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\SDK-2025-03-07\foobar2000;..\..\SDK-2025-03-07;3rdParty\libkss\modules;3rdParty\libkss\src;3rdParty\libkss\src\kss;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\SDK-2025-03-07\foobar2000;..\..\SDK-2025-03-07;..\..\SDK-2025-03-07\libPPUI;3rdParty\libkss\modules;3rdParty\libkss\src;3rdParty\libkss\src\kss;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard><LanguageStandard_C>stdc17</LanguageStandard_C>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4244;4267;4996;4018;4101;4305;4706</DisableSpecificWarnings>
@@ -68,7 +68,7 @@
     <ClCompile>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary><PrecompiledHeader>Use</PrecompiledHeader><PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel><DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\SDK-2025-03-07\foobar2000;..\..\SDK-2025-03-07;3rdParty\libkss\modules;3rdParty\libkss\src;3rdParty\libkss\src\kss;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\SDK-2025-03-07\foobar2000;..\..\SDK-2025-03-07;..\..\SDK-2025-03-07\libPPUI;3rdParty\libkss\modules;3rdParty\libkss\src;3rdParty\libkss\src\kss;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard><LanguageStandard_C>stdc17</LanguageStandard_C>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4244;4267;4996;4018;4101;4305;4706</DisableSpecificWarnings>
@@ -83,7 +83,7 @@
     <ClCompile>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary><PrecompiledHeader>Use</PrecompiledHeader><PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel><DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\SDK-2025-03-07\foobar2000;..\..\SDK-2025-03-07;3rdParty\libkss\modules;3rdParty\libkss\src;3rdParty\libkss\src\kss;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\SDK-2025-03-07\foobar2000;..\..\SDK-2025-03-07;..\..\SDK-2025-03-07\libPPUI;3rdParty\libkss\modules;3rdParty\libkss\src;3rdParty\libkss\src\kss;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard><LanguageStandard_C>stdc17</LanguageStandard_C>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4244;4267;4996;4018;4101;4305;4706</DisableSpecificWarnings>
@@ -141,6 +141,8 @@
     <ProjectReference Include="..\..\SDK-2025-03-07\pfc\pfc.vcxproj"><Project>{EBFFFB4E-261D-44D3-B89C-957B31A0BF9C}</Project></ProjectReference>
     <ProjectReference Include="..\..\SDK-2025-03-07\foobar2000\foobar2000_component_client\foobar2000_component_client.vcxproj"><Project>{71AD2674-065B-48F5-B8B0-E1F9D3892081}</Project></ProjectReference>
     <ProjectReference Include="..\..\SDK-2025-03-07\foobar2000\SDK\foobar2000_SDK.vcxproj"><Project>{E8091321-D79D-4575-86EF-064EA1A4A20D}</Project></ProjectReference>
+    <ProjectReference Include="..\..\SDK-2025-03-07\foobar2000\helpers\foobar2000_sdk_helpers.vcxproj"><Project>{EE47764E-A202-4F85-A767-ABDAB4AFF35F}</Project></ProjectReference>
+    <ProjectReference Include="..\..\SDK-2025-03-07\libPPUI\libPPUI.vcxproj"><Project>{7729EB82-4069-4414-964B-AD399091A03F}</Project></ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

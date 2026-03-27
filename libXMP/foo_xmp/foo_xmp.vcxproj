@@ -70,7 +70,7 @@
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\SDK-2025-03-07\foobar2000;..\..\SDK-2025-03-07;3rdParty\libxmp-master\include;3rdParty\libxmp-master\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\SDK-2025-03-07\foobar2000;..\..\SDK-2025-03-07;..\..\SDK-2025-03-07\libPPUI;3rdParty\libxmp-master\include;3rdParty\libxmp-master\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <FloatingPointModel>Fast</FloatingPointModel>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -97,7 +97,7 @@
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\SDK-2025-03-07\foobar2000;..\..\SDK-2025-03-07;3rdParty\libxmp-master\include;3rdParty\libxmp-master\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\SDK-2025-03-07\foobar2000;..\..\SDK-2025-03-07;..\..\SDK-2025-03-07\libPPUI;3rdParty\libxmp-master\include;3rdParty\libxmp-master\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <FloatingPointModel>Fast</FloatingPointModel>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -124,7 +124,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>..\..\SDK-2025-03-07\foobar2000;..\..\SDK-2025-03-07;3rdParty\libxmp-master\include;3rdParty\libxmp-master\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\SDK-2025-03-07\foobar2000;..\..\SDK-2025-03-07;..\..\SDK-2025-03-07\libPPUI;3rdParty\libxmp-master\include;3rdParty\libxmp-master\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <FloatingPointModel>Fast</FloatingPointModel>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -153,7 +153,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>..\..\SDK-2025-03-07\foobar2000;..\..\SDK-2025-03-07;3rdParty\libxmp-master\include;3rdParty\libxmp-master\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\SDK-2025-03-07\foobar2000;..\..\SDK-2025-03-07;..\..\SDK-2025-03-07\libPPUI;3rdParty\libxmp-master\include;3rdParty\libxmp-master\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <FloatingPointModel>Fast</FloatingPointModel>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -333,6 +333,12 @@
     </ProjectReference>
     <ProjectReference Include="..\..\SDK-2025-03-07\foobar2000\SDK\foobar2000_SDK.vcxproj">
       <Project>{E8091321-D79D-4575-86EF-064EA1A4A20D}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SDK-2025-03-07\foobar2000\helpers\foobar2000_sdk_helpers.vcxproj">
+      <Project>{EE47764E-A202-4F85-A767-ABDAB4AFF35F}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SDK-2025-03-07\libPPUI\libPPUI.vcxproj">
+      <Project>{7729EB82-4069-4414-964B-AD399091A03F}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

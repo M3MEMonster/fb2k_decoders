@@ -4,7 +4,7 @@
 
 IDD_UADE_DECODERS DIALOGEX 0, 0, 340, 240
 STYLE DS_SETFONT | WS_CHILD
-FONT 8, "Microsoft Sans Serif", 400, 0, 0x0
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
     AUTOCHECKBOX    "Play indefinitely",
                     IDC_PLAY_INDEFINITELY, 7, 7, 320, 10
@@ -15,11 +15,9 @@ BEGIN
     COMBOBOX        IDC_SAMPLERATE_COMBO, 55, 34, 70, 200,
                     CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
 
-    LTEXT           "Enable or disable individual UADE player/decoder modules:",
-                    IDC_DECODER_NOTE, 7, 54, 320, 8
     CONTROL         "", IDC_DECODER_LIST, "SysListView32",
-                    WS_BORDER | WS_TABSTOP | WS_VSCROLL | LVS_REPORT | LVS_SHOWSELALWAYS | LVS_SINGLESEL,
-                    7, 66, 326, 154
+                    LVS_REPORT | LVS_SINGLESEL | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,
+                    7, 52, 326, 168
     PUSHBUTTON      "Enable All",  IDC_BTN_ENABLE_ALL,  7, 224, 55, 14
     PUSHBUTTON      "Disable All", IDC_BTN_DISABLE_ALL, 67, 224, 55, 14
 END

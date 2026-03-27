@@ -289,6 +289,18 @@ std::vector<const duration_record*> duration_database::search(const char* query)
     return result;
 }
 
+bool duration_database::has_path(const char* path) const {
+    const_cast<duration_database*>(this)->ensure_loaded();
+    PFC_INSYNC_READ(m_lock);
+    pfc::string8 prefix;
+    prefix << path << "|";
+    std::string sprefix(prefix.c_str());
+    for (auto& [key, hash] : m_location_to_hash) {
+        if (key.compare(0, sprefix.size(), sprefix) == 0) return true;
+    }
+    return false;
+}
+
 bool duration_database::has_entries() const {
     const_cast<duration_database*>(this)->ensure_loaded();
     PFC_INSYNC_READ(m_lock);
